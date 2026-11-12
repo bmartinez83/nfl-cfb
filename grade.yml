@@ -1,0 +1,39 @@
+name: grade
+# Grades every logged lean once the weekend games are final. Tuesdays 15:00 UTC. Report: outputs/grade_report.txt
+on:
+  schedule:
+    - cron: "0 15 * * 2"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tracker-data
+  cancel-in-progress: false
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - uses: actions/cache@v4
+        with:
+          path: data/raw/cfb
+          key: cfb-history-v1
+      - name: Grade
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: |
+          python src/cfb_pull.py --start 2019
+          python src/cfb_pull.py --start 2026 --refresh
+          { echo "=== CFB ==="; python -W ignore src/cfb_weekly.py --grade;
+            echo; echo "=== NFL ==="; python -W ignore src/nfl_weekly.py --refresh --grade 2>&1 | grep -v "^season\|^team_week\|^games.csv\|^Raw files"; } | tee outputs/grade_report.txt
+      - run: |
+          git config user.name "tracker-bot"
+          git config user.email "tracker-bot@users.noreply.github.com"
+          git add outputs
+          git diff --cached --quiet || (git commit -m "grade report $(date -u +%F)" && git pull --rebase && git push)

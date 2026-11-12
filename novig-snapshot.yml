@@ -1,0 +1,30 @@
+name: novig-snapshot
+# Saves Novig's NFL prices (spread/total/moneyline implied lines) every 30 min Thu-Mon (UTC days),
+# plus an opening-line run Tue/Wed. No API key needed. Times are UTC and GitHub may start a run a few minutes late.
+on:
+  schedule:
+    - cron: "*/30 * * * 4,5,6,0,1"
+    - cron: "0 18 * * 2,3"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tracker-data
+  cancel-in-progress: false
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Snapshot Novig (games table only)
+        run: python src/novig_snapshot.py --quotes none
+      - name: Save results
+        run: |
+          git config user.name "tracker-bot"
+          git config user.email "tracker-bot@users.noreply.github.com"
+          git add outputs
+          git diff --cached --quiet || (git commit -m "novig snapshot $(date -u +%FT%TZ)" && git pull --rebase && git push)

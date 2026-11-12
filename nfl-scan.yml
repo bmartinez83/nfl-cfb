@@ -1,0 +1,32 @@
+name: nfl-scan
+# Logs NFL leans + the current line. Wed (open), Thu before TNF, Sun morning and just before the 1pm games, Mon before MNF. UTC.
+on:
+  schedule:
+    - cron: "0 18 * * 3"
+    - cron: "0 21 * * 4"
+    - cron: "0 13 * * 0"
+    - cron: "30 16 * * 0"
+    - cron: "0 21 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tracker-data
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -W ignore src/nfl_weekly.py --refresh
+      - run: |
+          git config user.name "tracker-bot"
+          git config user.email "tracker-bot@users.noreply.github.com"
+          git add outputs
+          git diff --cached --quiet || (git commit -m "nfl scan $(date -u +%FT%TZ)" && git pull --rebase && git push)

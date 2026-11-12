@@ -1,0 +1,27 @@
+name: novig-ladder
+# Full price ladder (big file) twice a week only: Thu before the Thursday game and Sun before the early games.
+on:
+  schedule:
+    - cron: "30 22 * * 4"
+    - cron: "30 16 * * 0"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tracker-data
+  cancel-in-progress: false
+jobs:
+  ladder:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python src/novig_snapshot.py --quotes all
+      - run: |
+          git config user.name "tracker-bot"
+          git config user.email "tracker-bot@users.noreply.github.com"
+          git add outputs
+          git diff --cached --quiet || (git commit -m "novig ladder $(date -u +%FT%TZ)" && git pull --rebase && git push)
