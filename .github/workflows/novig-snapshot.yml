@@ -1,9 +1,9 @@
 name: novig-snapshot
-# Saves Novig's NFL prices (spread/total/moneyline implied lines) every 30 min Thu-Mon (UTC days),
+# Saves Novig's NFL prices (spread/total/moneyline implied lines) every hour Thu-Mon (UTC days),
 # plus an opening-line run Tue/Wed. No API key needed. Times are UTC and GitHub may start a run a few minutes late.
 on:
   schedule:
-    - cron: "*/30 * * * 4,5,6,0,1"
+    - cron: "0 * * * 4,5,6,0,1"
     - cron: "0 18 * * 2,3"
   workflow_dispatch:
 permissions:
