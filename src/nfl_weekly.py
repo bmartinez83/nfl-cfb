@@ -39,8 +39,8 @@ ET = ZoneInfo("America/New_York")
 LOG_COLS = ["run_ts_utc", "season", "week", "game_id", "gameday", "gametime", "away", "home",
             "spread_line", "total_line", "home_ml", "away_ml",
             "model_margin", "model_total", "model_prob_home",
-            "gap_spread", "gap_total", "spread_lean", "total_lean"]
-LINE_COLS = ["spread_line", "total_line", "home_ml", "away_ml"]
+            "gap_spread", "gap_total", "spread_lean", "total_lean", "inj_hold", "inj_note"]
+LINE_COLS = ["spread_line", "total_line", "home_ml", "away_ml", "inj_note"]
 
 
 def _now(args_now: str | None) -> datetime:
@@ -57,6 +57,8 @@ def _load_log(path: Path) -> pd.DataFrame:
 
 
 def _same(a, b) -> bool:
+    if isinstance(a, str) or isinstance(b, str):      # text columns (injury note): blank == missing
+        return (a if isinstance(a, str) else "") == (b if isinstance(b, str) else "")
     if pd.isna(a) and pd.isna(b):
         return True
     if pd.isna(a) or pd.isna(b):
@@ -119,6 +121,8 @@ def run_score(args) -> None:
 
     pred["ev_spread_pct"] = _ev(pred["gap_spread"], bundle["margin_sd"])
     pred["ev_total_pct"] = _ev(pred["gap_total"], bundle["total_sd"])
+    import injuries
+    pred = injuries.flag_games(pred, int(pred["season"].iloc[0]))
     pred = pred.sort_values(["gameday", "gametime", "game_id"])
 
     rows = pd.DataFrame({
@@ -132,6 +136,7 @@ def run_score(args) -> None:
         "model_prob_home": pred["model_prob_home"].round(4),
         "gap_spread": pred["gap_spread"].round(2), "gap_total": pred["gap_total"].round(2),
         "spread_lean": pred["spread_lean"], "total_lean": pred["total_lean"],
+        "inj_hold": pred["inj_hold"], "inj_note": pred["inj_note"],
     })[LOG_COLS]
 
     log_path = out / "nfl_log.csv"
@@ -154,14 +159,16 @@ def run_score(args) -> None:
         kickoff=pred["gameday"].astype(str) + " " + pred["gametime"].fillna("").astype(str),
         game=pred["away_team"] + " @ " + pred["home_team"])
     cols = ["kickoff", "game", "spread_line", "model_margin", "gap_spread", "spread_lean",
-            "ev_spread_pct", "total_line", "model_total", "gap_total", "total_lean", "ev_total_pct"]
+            "ev_spread_pct", "total_line", "model_total", "gap_total", "total_lean", "ev_total_pct",
+            "inj_hold", "inj_note"]
     pd.set_option("display.width", 250)
     print("\n" + view[cols].round(1).to_string(index=False))
     view[cols].round(2).to_csv(out / "nfl_weekly_predictions.csv", index=False)
     print("\nspread_line is the HOME margin the market expects (positive = home favored). "
           "gap = model minus market.\nev_*_pct = UNCALIBRATED expected value per 100 risked at -110 IF the "
           "model's win chance were right.\nThe model overstates its confidence, so large positive numbers are "
-          "NOT real.\nNO edge was found in testing: these are leans to LOG and grade, not bets.")
+          "NOT real.\ninj_hold=True: a QB is Out/Doubtful/Questionable or 3+ starters are out - the model's ratings "
+          "may be stale, so check that lean by hand.\nNO edge was found in testing: these are leans to LOG and grade, not bets.")
 
 
 def _wilson(w: int, n: int, z: float = 1.96):
