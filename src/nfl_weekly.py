@@ -52,7 +52,11 @@ def _now(args_now: str | None) -> datetime:
 
 def _load_log(path: Path) -> pd.DataFrame:
     if path.exists():
-        return pd.read_csv(path, low_memory=False)
+        df = pd.read_csv(path, low_memory=False)
+        for c in LOG_COLS:                      # older logs predate newer columns (e.g. inj_note)
+            if c not in df.columns:
+                df[c] = np.nan
+        return df
     return pd.DataFrame(columns=LOG_COLS)
 
 
