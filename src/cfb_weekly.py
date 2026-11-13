@@ -303,6 +303,29 @@ def fmt_tally(label: str, w: int, n: int, pushes: int = 0, roi: bool = False) ->
     return s
 
 
+def plain_view(res: pd.DataFrame) -> pd.DataFrame:
+    """One readable line per game (the full numeric table still goes to the CSV)."""
+    def f(r):
+        h, a = r.homeTeam, r.awayTeam
+        line = f"{h} {r.mkt_spread:+.1f}" + (f" (open {r.sp_open:+.1f})" if pd.notna(r.sp_open) else "")
+        side = ""
+        if pd.notna(r.pred_side_resid) and abs(r.pred_side_resid) >= 0.5:
+            side = f"{h if r.side_lean == 'home' else a} +{abs(r.pred_side_resid):.1f}"
+        tot = ""
+        if pd.notna(r.pred_total_resid) and abs(r.pred_total_resid) >= 0.5:
+            tot = f"{r.total_lean.upper()} {r.mkt_total:.1f}->{r.fair_total:.1f}"
+        mv = ""
+        if pd.notna(r.remaining_move) and abs(r.remaining_move) >= 0.5:
+            mv = f"toward {h if r.move_lean == 'home' else a} {abs(r.remaining_move):.1f}"
+        evs = [(r.ev_side_pct, "side"), (r.ev_total_pct, "total")]
+        evs = [e for e in evs if pd.notna(e[0])]
+        ev = f"{max(evs)[0]:+.0f}% {max(evs)[1]}" if evs else ""
+        return pd.Series({"Kickoff": r.kickoff_pt, "Game": f"{a} @ {h}", "Line": line, "SIDE": side,
+                          "TOTAL": tot, "MOVE": mv, "EV": ev,
+                          "NEWS?": "CHECK" if r.check_news else ""})
+    return res.apply(f, axis=1)
+
+
 # ------------------------------------------------------------------------- run
 def run_score(args) -> int:
     data_dir, out_dir = Path(args.data), Path(args.out)
@@ -341,8 +364,17 @@ def run_score(args) -> int:
         show[c] = show[c].round(2)
     show.to_csv(out_dir / "cfb_weekly_predictions.csv", index=False)
     pd.set_option("display.width", 250, "display.max_columns", 30)
-    print(f"\n{len(show)} upcoming games with lines (spread is the HOME line: negative = home favored)\n")
-    print(show.to_string(index=False))
+    if getattr(args, "wide", False):
+        print(f"\n{len(show)} upcoming games with lines (spread is the HOME line: negative = home favored)\n")
+        print(show.to_string(index=False))
+    else:
+        print(f"\n{len(show)} upcoming games with lines. Full columns are in {out_dir / 'cfb_weekly_predictions.csv'} "
+              f"(or run with --wide).\n")
+        print(plain_view(res).to_string(index=False))
+        print("\nHOW TO READ: 'Line' = home team's current spread (open in brackets); negative = favored.\n"
+              "SIDE = team the model says covers, and by how many points of edge (blank = under 0.5 pt, i.e. no lean). TOTAL = lean, market total -> model total (blank = under 0.5 pt).\n"
+              "MOVE = which way the model expects the spread to still move. EV = best uncalibrated EV (side/total).\n"
+              "NEWS? = line or total moved 4+ points since the open (injury/suspension?) - skip those leans until checked.")
     print("\nev_side_pct / ev_total_pct = UNCALIBRATED expected value per 100 risked at -110 IF the model's win chance were\n"
           "right. Negative = the vig outweighs the model's edge. Not a bet signal: no edge has been proven.")
     print("\nSIDE leans (side_lean = which team covers the current spread; side_fair_spread = model's home line) are shown\n"
@@ -448,6 +480,7 @@ def main() -> int:
     ap.add_argument("--days", type=int, default=8, help="score games kicking off within N days")
     ap.add_argument("--grade", action="store_true", help="grade logged games that have finished")
     ap.add_argument("--now", default=None, help="override current time (ISO, UTC) - for testing")
+    ap.add_argument("--wide", action="store_true", help="print every numeric column instead of the plain view")
     args = ap.parse_args()
     return run_grade(args) if args.grade else run_score(args)
 
