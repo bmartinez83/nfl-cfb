@@ -97,8 +97,12 @@ def cfb_section(rows):
         evs = [x for x in (num(r["ev_side_pct"]), num(r["ev_total_pct"])) if x is not None]
         ev = f"{max(evs):+.0f}%" if evs else ""
         news = "<span class='pill warn'>CHECK NEWS</span>" if r.get("check_news") else ""
+        wxflag = str(r.get("wx_flag", "")).lower() == "true"
+        if wxflag:
+            news += " <span class='pill warn'>WEATHER</span>"
+        wxn = f"<div class='note'>Weather: {E(r.get('wx_note', ''))}</div>" if wxflag else ""
         dash = "<span class=muted>—</span>"
-        body.append(f"<tr><td class='nowrap'>{E(r['kickoff_pt'])}</td><td><b>{E(away)} @ {E(home)}</b></td>"
+        body.append(f"<tr><td class='nowrap'>{E(r['kickoff_pt'])}</td><td><b>{E(away)} @ {E(home)}</b>{wxn}</td>"
                     f"<td class='nowrap'>{E(line)}</td><td>{E(side) or dash}</td><td class='nowrap'>{E(tot) or dash}</td>"
                     f"<td class='nowrap'>{E(mv) or dash}</td><td class='num'>{ev}</td><td>{news}</td></tr>")
     return ("<div class='scroll'><table><thead><tr><th>Kickoff (PT)</th><th>Game</th><th>Home line</th>"

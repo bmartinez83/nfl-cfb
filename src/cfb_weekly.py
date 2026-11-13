@@ -320,9 +320,10 @@ def plain_view(res: pd.DataFrame) -> pd.DataFrame:
         evs = [(r.ev_side_pct, "side"), (r.ev_total_pct, "total")]
         evs = [e for e in evs if pd.notna(e[0])]
         ev = f"{max(evs)[0]:+.0f}% {max(evs)[1]}" if evs else ""
+        wx = r.wx_note if getattr(r, "wx_flag", None) is True else ""
         return pd.Series({"Kickoff": r.kickoff_pt, "Game": f"{a} @ {h}", "Line": line, "SIDE": side,
                           "TOTAL": tot, "MOVE": mv, "EV": ev,
-                          "NEWS?": "CHECK" if r.check_news else ""})
+                          "NEWS?": "CHECK" if r.check_news else "", "WEATHER": wx})
     return res.apply(f, axis=1)
 
 
@@ -351,13 +352,19 @@ def run_score(args) -> int:
               f"(lines usually post a few days before kickoff).")
         return 0
     res = score_upcoming(train, up).sort_values("start")
+    try:
+        import cfb_weather
+        res = cfb_weather.flag_games(res, data_dir)
+    except Exception as e:  # noqa: BLE001 - weather is optional context
+        print(f"WARNING: weather skipped ({e.__class__.__name__}: {e})")
+        res["wx_note"], res["wx_flag"] = "", None
     res["kickoff_pt"] = res["start"].dt.tz_convert(PT).dt.strftime("%a %m/%d %I:%M %p")
     res["game"] = res["awayTeam"] + " @ " + res["homeTeam"]
 
     show = res[["kickoff_pt", "game", "mkt_spread", "sp_open", "mkt_total", "ou_open", "n_books",
                 "side_lean", "pred_side_resid", "side_fair_spread",
                 "pred_total_resid", "fair_total", "total_lean", "remaining_move", "fair_home_spread",
-                "move_lean", "ev_side_pct", "ev_total_pct", "check_news"]].copy()
+                "move_lean", "ev_side_pct", "ev_total_pct", "check_news", "wx_note", "wx_flag"]].copy()
     for c in ("fair_total", "remaining_move", "fair_home_spread", "pred_total_resid"):
         show[c] = show[c].round(1)
     for c in ("pred_side_resid", "side_fair_spread"):
@@ -374,6 +381,7 @@ def run_score(args) -> int:
         print("\nHOW TO READ: 'Line' = home team's current spread (open in brackets); negative = favored.\n"
               "SIDE = team the model says covers, and by how many points of edge (blank = under 0.5 pt, i.e. no lean). TOTAL = lean, market total -> model total (blank = under 0.5 pt).\n"
               "MOVE = which way the model expects the spread to still move. EV = best uncalibrated EV (side/total).\n"
+              "WEATHER = shown only for bad conditions (wind 15+ mph, gusts 25+, rain 60%+, 25F or colder); context only.\n"
               "NEWS? = line or total moved 4+ points since the open (injury/suspension?) - skip those leans until checked.")
     print("\nev_side_pct / ev_total_pct = UNCALIBRATED expected value per 100 risked at -110 IF the model's win chance were\n"
           "right. Negative = the vig outweighs the model's edge. Not a bet signal: no edge has been proven.")
