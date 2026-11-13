@@ -138,6 +138,20 @@ def main() -> int:
                 schema[name] = sorted(set(schema.get(name, [])) | set(df.columns))
                 print(f"{name} {year}: {len(df)} rows -> {dest.name}")
                 time.sleep(SLEEP)
+        # venue list (stadium coordinates + dome flag) for the weather flags: one call, not per season
+        vdest = OUT / "venues.csv"
+        if args.dry_run:
+            print(f"would call /venues -> {vdest.name}")
+        elif args.refresh or not vdest.exists():
+            try:
+                vdata = fetch("/venues", {}, key)
+                vdf = to_frame("venues", vdata)
+                vdf.to_csv(vdest, index=False)
+                schema["venues"] = sorted(set(schema.get("venues", [])) | set(vdf.columns))
+                calls += 1
+                print(f"venues: {len(vdf)} rows -> {vdest.name}; columns: {list(vdf.columns)[:14]}")
+            except (urllib.error.HTTPError, urllib.error.URLError) as e:
+                print(f"venues: skipped ({e.__class__.__name__}); weather flags will say 'venue unknown'")
     except QuotaOrAuth as e:
         print(f"\nSTOPPED: {e}")
         print("Files already written are kept; re-run later to resume.")
