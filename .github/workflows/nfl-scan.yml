@@ -26,5 +26,6 @@ jobs:
       - run: |
           git config user.name "tracker-bot"
           git config user.email "tracker-bot@users.noreply.github.com"
-          git add outputs
+          python src/report.py
+          git add outputs docs
           git diff --cached --quiet || (git commit -m "nfl scan $(date -u +%FT%TZ)" && git pull --rebase && git push)
