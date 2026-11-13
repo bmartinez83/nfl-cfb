@@ -39,7 +39,7 @@ ET = ZoneInfo("America/New_York")
 LOG_COLS = ["run_ts_utc", "season", "week", "game_id", "gameday", "gametime", "away", "home",
             "spread_line", "total_line", "home_ml", "away_ml",
             "model_margin", "model_total", "model_prob_home",
-            "gap_spread", "gap_total", "spread_lean", "total_lean", "inj_hold", "inj_note"]
+            "gap_spread", "gap_total", "spread_lean", "total_lean", "inj_hold", "inj_note", "wx_note"]
 LINE_COLS = ["spread_line", "total_line", "home_ml", "away_ml", "inj_note"]
 
 
@@ -90,6 +90,9 @@ def run_score(args) -> None:
     if "gametime" not in df.columns:
         gt = pd.read_csv(Path(args.data) / "games.csv", usecols=["game_id", "gametime"])
         df = df.merge(gt, on="game_id", how="left")
+    if "roof" not in df.columns:
+        rl = pd.read_csv(Path(args.data) / "games.csv", usecols=["game_id", "roof", "location"])
+        df = df.merge(rl, on="game_id", how="left")
     played = df[df["home_score"].notna()]
     upcoming = df[df["home_score"].isna()].copy()
     upcoming["gd"] = pd.to_datetime(upcoming["gameday"]).dt.date
@@ -127,6 +130,8 @@ def run_score(args) -> None:
     pred["ev_total_pct"] = _ev(pred["gap_total"], bundle["total_sd"])
     import injuries
     pred = injuries.flag_games(pred, int(pred["season"].iloc[0]))
+    import weather
+    pred = weather.flag_games(pred)
     pred = pred.sort_values(["gameday", "gametime", "game_id"])
 
     rows = pd.DataFrame({
@@ -140,7 +145,7 @@ def run_score(args) -> None:
         "model_prob_home": pred["model_prob_home"].round(4),
         "gap_spread": pred["gap_spread"].round(2), "gap_total": pred["gap_total"].round(2),
         "spread_lean": pred["spread_lean"], "total_lean": pred["total_lean"],
-        "inj_hold": pred["inj_hold"], "inj_note": pred["inj_note"],
+        "inj_hold": pred["inj_hold"], "inj_note": pred["inj_note"], "wx_note": pred["wx_note"],
     })[LOG_COLS]
 
     log_path = out / "nfl_log.csv"
@@ -164,14 +169,16 @@ def run_score(args) -> None:
         game=pred["away_team"] + " @ " + pred["home_team"])
     cols = ["kickoff", "game", "spread_line", "model_margin", "gap_spread", "spread_lean",
             "ev_spread_pct", "total_line", "model_total", "gap_total", "total_lean", "ev_total_pct",
-            "inj_hold", "inj_note"]
+            "inj_hold", "inj_note", "wx_note", "wx_flag"]
     pd.set_option("display.width", 250)
     print("\n" + view[cols].round(1).to_string(index=False))
     view[cols].round(2).to_csv(out / "nfl_weekly_predictions.csv", index=False)
     print("\nspread_line is the HOME margin the market expects (positive = home favored). "
           "gap = model minus market.\nev_*_pct = UNCALIBRATED expected value per 100 risked at -110 IF the "
           "model's win chance were right.\nThe model overstates its confidence, so large positive numbers are "
-          "NOT real.\ninj_hold=True: a QB is Out/Doubtful/Questionable or 3+ starters are out - the model's ratings "
+          "NOT real.\nwx_note = forecast at kickoff (wind/temp/rain); wx_flag=True when wind 15+ mph, gusts 25+, rain 60%+ or 25F or colder.\n"
+          "Weather is shown for context only: it did not predict totals out of sample in testing.\n"
+          "inj_hold=True: a QB is Out/Doubtful/Questionable or 3+ starters are out - the model's ratings "
           "may be stale, so check that lean by hand.\nNO edge was found in testing: these are leans to LOG and grade, not bets.")
 
 

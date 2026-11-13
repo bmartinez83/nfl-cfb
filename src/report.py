@@ -53,9 +53,11 @@ def nfl_rows(rows):
             tot = f"{r['total_lean'].upper()} {tl:.1f}→{mt:.1f}"
         hold = str(r.get("inj_hold", "")).lower() == "true"
         note = r.get("inj_note", "") or ""
+        wx = r.get("wx_note", "") or ""
+        wxflag = str(r.get("wx_flag", "")).lower() == "true"
         out.append((r["kickoff"], f"{away} @ {home}", f"{home} {-sp:+.1f}" if sp is not None else "",
                     side, tot, max(x for x in (num(r["ev_spread_pct"]), num(r["ev_total_pct"]), -999) if x is not None),
-                    hold, note))
+                    hold, note, wx, wxflag))
     return out
 
 
@@ -63,9 +65,11 @@ def nfl_section(rows):
     if not rows:
         return "<p class='muted'>No NFL games with lines right now.</p>"
     body = []
-    for k, g, line, side, tot, ev, hold, note in nfl_rows(rows):
-        flag = ("<span class='pill warn'>CHECK INJURIES</span>" if hold else "")
-        n = f"<div class='note'>{E(note)}</div>" if note else ""
+    for k, g, line, side, tot, ev, hold, note, wx, wxflag in nfl_rows(rows):
+        flag = ("<span class='pill warn'>CHECK INJURIES</span> " if hold else "") + \
+               ("<span class='pill warn'>WEATHER</span>" if wxflag else "")
+        n = (f"<div class='note'>{E(note)}</div>" if note else "") + \
+            (f"<div class='note'>Weather: {E(wx)}</div>" if wx and not any(k in wx for k in ("no weather effect", "unavailable", "not available", "not checked")) else "")
         body.append(f"<tr><td class='nowrap'>{E(k)}</td><td><b>{E(g)}</b>{n}</td><td class='nowrap'>{E(line)}</td>"
                     f"<td>{E(side) or '<span class=muted>—</span>'}</td>"
                     f"<td class='nowrap'>{E(tot) or '<span class=muted>—</span>'}</td>"
@@ -170,7 +174,7 @@ def build(out: Path) -> str:
     parts = [
         f"<header><h1>Weekly Lean Report</h1><p class='muted' style='margin:0'>Updated {E(now)}. Lines come from the latest scheduled scan.</p></header>",
         "<div class='banner'><b>These are leans to log and grade, not bets.</b> Testing found no proven edge. "
-        "Check any game marked CHECK INJURIES or CHECK NEWS before reading anything into its lean.</div>",
+        "Check any game marked CHECK INJURIES, WEATHER or CHECK NEWS before reading anything into its lean. Weather is context only: it did not predict totals out of sample.</div>",
         f"<section><h2>NFL ({len(nfl)} games)</h2>{nfl_section(nfl)}</section>",
         f"<section><h2>College football ({len(cfb)} games)</h2>{cfb_section(cfb)}</section>",
         novig_section(nov),
