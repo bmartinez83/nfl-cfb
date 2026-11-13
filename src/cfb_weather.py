@@ -52,11 +52,15 @@ def _first(row, cols):
 
 
 def venue_info(venues: pd.DataFrame, venue_id) -> dict | None:
-    if venues is None or pd.isna(venue_id) or "id" not in venues.columns:
+    if venues is None:
+        return {"err": "venues.csv not found"}
+    if pd.isna(venue_id):
         return None
-    m = venues[venues["id"] == int(venue_id)]
+    if "id" not in venues.columns:
+        return {"err": "venues columns: " + ",".join(map(str, venues.columns[:8]))}
+    m = venues[pd.to_numeric(venues["id"], errors="coerce") == int(venue_id)]
     if m.empty:
-        return None
+        return {"err": f"venue id {int(venue_id)} not in {len(venues)} venues"}
     r = m.iloc[0]
     dome = bool(r["dome"]) if "dome" in r.index and pd.notna(r["dome"]) else False
     return {"lat": _first(r, LAT_COLS), "lon": _first(r, LON_COLS), "dome": dome}
@@ -65,6 +69,8 @@ def venue_info(venues: pd.DataFrame, venue_id) -> dict | None:
 def note_for(info, kick: datetime, fetcher=W.fetch) -> tuple[str, bool | None]:
     if info is None:
         return "venue unknown - weather not checked", None
+    if "err" in info:
+        return "venue unknown (" + info["err"] + ")", None
     if info["dome"]:
         return "dome - no weather effect", False
     if info["lat"] is None or info["lon"] is None:
