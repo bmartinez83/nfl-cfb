@@ -55,9 +55,10 @@ def nfl_rows(rows):
         note = r.get("inj_note", "") or ""
         wx = r.get("wx_note", "") or ""
         wxflag = str(r.get("wx_flag", "")).lower() == "true"
+        rs = r.get("rest_note", "") or ""
         out.append((r["kickoff"], f"{away} @ {home}", f"{home} {-sp:+.1f}" if sp is not None else "",
                     side, tot, max(x for x in (num(r["ev_spread_pct"]), num(r["ev_total_pct"]), -999) if x is not None),
-                    hold, note, wx, wxflag))
+                    hold, note, wx, wxflag, rs))
     return out
 
 
@@ -65,11 +66,12 @@ def nfl_section(rows):
     if not rows:
         return "<p class='muted'>No NFL games with lines right now.</p>"
     body = []
-    for k, g, line, side, tot, ev, hold, note, wx, wxflag in nfl_rows(rows):
+    for k, g, line, side, tot, ev, hold, note, wx, wxflag, rs in nfl_rows(rows):
         flag = ("<span class='pill warn'>CHECK INJURIES</span> " if hold else "") + \
                ("<span class='pill warn'>WEATHER</span>" if wxflag else "")
         n = (f"<div class='note'>{E(note)}</div>" if note else "") + \
-            (f"<div class='note'>Weather: {E(wx)}</div>" if wx and not any(k in wx for k in ("no weather effect", "unavailable", "not available", "not checked")) else "")
+            (f"<div class='note'>Weather: {E(wx)}</div>" if wx and not any(k in wx for k in ("no weather effect", "unavailable", "not available", "not checked")) else "") + \
+            (f"<div class='note'>{E(rs)}</div>" if rs else "")
         body.append(f"<tr><td class='nowrap'>{E(k)}</td><td><b>{E(g)}</b>{n}</td><td class='nowrap'>{E(line)}</td>"
                     f"<td>{E(side) or '<span class=muted>—</span>'}</td>"
                     f"<td class='nowrap'>{E(tot) or '<span class=muted>—</span>'}</td>"
@@ -101,6 +103,9 @@ def cfb_section(rows):
         if wxflag:
             news += " <span class='pill warn'>WEATHER</span>"
         wxn = f"<div class='note'>Weather: {E(r.get('wx_note', ''))}</div>" if wxflag else ""
+        rs = r.get("rest_note", "") or ""
+        if rs:
+            wxn += f"<div class='note'>{E(rs)}</div>"
         dash = "<span class=muted>—</span>"
         body.append(f"<tr><td class='nowrap'>{E(r['kickoff_pt'])}</td><td><b>{E(away)} @ {E(home)}</b>{wxn}</td>"
                     f"<td class='nowrap'>{E(line)}</td><td>{E(side) or dash}</td><td class='nowrap'>{E(tot) or dash}</td>"

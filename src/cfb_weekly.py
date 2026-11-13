@@ -321,9 +321,10 @@ def plain_view(res: pd.DataFrame) -> pd.DataFrame:
         evs = [e for e in evs if pd.notna(e[0])]
         ev = f"{max(evs)[0]:+.0f}% {max(evs)[1]}" if evs else ""
         wx = r.wx_note if getattr(r, "wx_flag", None) is True else ""
+        rs = getattr(r, "rest_note", "") or ""
         return pd.Series({"Kickoff": r.kickoff_pt, "Game": f"{a} @ {h}", "Line": line, "SIDE": side,
                           "TOTAL": tot, "MOVE": mv, "EV": ev,
-                          "NEWS?": "CHECK" if r.check_news else "", "WEATHER": wx})
+                          "NEWS?": "CHECK" if r.check_news else "", "WEATHER": wx, "REST": rs.replace("rest: ", "")})
     return res.apply(f, axis=1)
 
 
@@ -358,13 +359,19 @@ def run_score(args) -> int:
     except Exception as e:  # noqa: BLE001 - weather is optional context
         print(f"WARNING: weather skipped ({e.__class__.__name__}: {e})")
         res["wx_note"], res["wx_flag"] = "", None
+    try:
+        import rest
+        res = rest.cfb_flag_games(res, load(data_dir, "games"))
+    except Exception as e:  # noqa: BLE001 - rest is optional context
+        print(f"WARNING: rest days skipped ({e.__class__.__name__}: {e})")
+        res["rest_note"], res["rest_flag"] = "", None
     res["kickoff_pt"] = res["start"].dt.tz_convert(PT).dt.strftime("%a %m/%d %I:%M %p")
     res["game"] = res["awayTeam"] + " @ " + res["homeTeam"]
 
     show = res[["kickoff_pt", "game", "mkt_spread", "sp_open", "mkt_total", "ou_open", "n_books",
                 "side_lean", "pred_side_resid", "side_fair_spread",
                 "pred_total_resid", "fair_total", "total_lean", "remaining_move", "fair_home_spread",
-                "move_lean", "ev_side_pct", "ev_total_pct", "check_news", "wx_note", "wx_flag"]].copy()
+                "move_lean", "ev_side_pct", "ev_total_pct", "check_news", "wx_note", "wx_flag", "rest_note", "rest_flag"]].copy()
     for c in ("fair_total", "remaining_move", "fair_home_spread", "pred_total_resid"):
         show[c] = show[c].round(1)
     for c in ("pred_side_resid", "side_fair_spread"):
