@@ -49,3 +49,4 @@ run_ts_utc,season,week,game_id,gameday,gametime,away,home,spread_line,total_line
 2026-11-14T01:23:33+00:00,2026,10,2026_10_SF_DAL,2026-11-15,16:25,SF,DAL,-4.5,55.5,180.0,-218.0,-7.94,50.86,0.2691,-3.44,-4.64,away,under,0.0,,dome/roof - no weather effect,
 2026-11-14T01:23:33+00:00,2026,10,2026_10_PIT_CIN,2026-11-15,20:20,PIT,CIN,3.5,49.5,-185.0,154.0,3.9,46.76,0.6056,0.4,-2.74,home,under,0.0,,weather unavailable (URLError),rest: PIT 14d @ CIN 7d (PIT off bye)
 2026-11-14T01:23:33+00:00,2026,10,2026_10_LAC_BAL,2026-11-16,20:15,LAC,BAL,4.5,38.5,-225.0,185.0,4.68,42.98,0.633,0.18,4.48,home,over,0.0,,weather unavailable (URLError),rest: LAC 8d @ BAL 11d (BAL off bye)
+2026-11-14T04:22:58+00:00,2026,10,2026_10_MIN_GB,2026-11-15,13:00,MIN,GB,2.5,42.5,-148.0,124.0,10.11,40.87,0.8313,7.61,-1.63,home,under,0.0,,weather unavailable (URLError),
