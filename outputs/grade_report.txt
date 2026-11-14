@@ -1,0 +1,33 @@
+=== CFB ===
+logged games: 72 | finished and gradeable: 8 | still pending: 64
+
+TOTALS (entry = first logged total; lean over/under; borderline signal in testing):
+  all leans: 5-3  = 62.5%  (95% CI 30.6-86.3%, n=8)  ROI at -110: +19.3%
+
+LINE MOVES (entry spread -> latest spread in your data; direction of the lean):
+  lean matched the move (0 games did not move): 4-4  = 50.0%  (95% CI 21.5-78.5%, n=8)
+  (50% = coin flip. 'Latest' is the last line CFBD holds, a proxy for the close.)
+
+SIDES (entry = first logged spread; NO edge found in testing, shown for the record):
+  all side leans: 3-4-1  = 42.9%  (95% CI 15.8-75.0%, n=7)  ROI at -110: -18.2%
+
+per-game detail: /home/runner/work/nfl-cfb/nfl-cfb/outputs/cfb_graded.csv
+Treat results as noise until n is in the hundreds.
+
+=== NFL ===
+  season 2019: 256 games, 256 with final scores
+  season 2020: 256 games, 256 with final scores
+  season 2021: 272 games, 272 with final scores
+  season 2022: 271 games, 271 with final scores
+  season 2023: 272 games, 272 with final scores
+  season 2024: 272 games, 272 with final scores
+  season 2025: 272 games, 272 with final scores
+  season 2026: 272 games, 137 with final scores
+games logged: 26 | finished and gradeable: 1 | pending: 25
+
+SPREAD leans (ATS at first logged line): 0-1-0  win% 0.0 (95% CI 0.0-79.3, breakeven 52.4)  ROI at -110 -100.0%
+TOTAL leans (at first logged line): 1-0-0  win% 100.0 (95% CI 20.7-100.0, breakeven 52.4)  ROI at -110 +90.9%
+CLV spread: avg -1.00 pts vs last logged line | line moved in your favor 0, against 1, unchanged 0
+CLV total: avg +0.00 pts vs last logged line | line moved in your favor 0, against 0, unchanged 1
+
+(CLV uses the LAST logged line as the close. Run a snapshot shortly before kickoff for it to mean anything.)

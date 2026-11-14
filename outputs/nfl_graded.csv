@@ -1,0 +1,2 @@
+game_id,run_ts_utc,season,week,gameday,gametime,away,home,spread_line,total_line,home_ml,away_ml,model_margin,model_total,model_prob_home,gap_spread,gap_total,spread_lean,total_lean,inj_hold,inj_note,wx_note,rest_note,close_spread,close_total,home_score,away_score,margin
+2026_10_WAS_NYG,2026-11-12T20:28:13+00:00,2026,10,2026-11-12,20:15,WAS,NYG,2.5,40.5,-130.0,110.0,3.91,43.77,0.6105,1.41,3.27,home,over,,,,,1.5,40.5,21.0,24.0,-3.0
