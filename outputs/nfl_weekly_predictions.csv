@@ -1,19 +1,14 @@
 kickoff,game,spread_line,model_margin,gap_spread,spread_lean,ev_spread_pct,total_line,model_total,gap_total,total_lean,ev_total_pct,inj_hold,inj_note,wx_note,wx_flag,rest_note
-2026-11-15 16:05,LA @ ARI,-10.0,-9.65,0.35,home,-2.4,38.5,45.59,7.09,over,33.1,False,LA: SLB Myles Garrett (Questionable); SS Kam Curl (Questionable); RCB Trent McDuffie (Questionable) | ARI: LDT Roy Lopez (Questionable); FS Andrew Wingard (Questionable); NB Max Melton (Questionable); LT Jayden Williams (Questionable),dome/roof - no weather effect,False,
-2026-11-15 16:05,SEA @ LV,-6.5,-5.03,1.47,home,4.4,40.5,44.11,3.61,over,15.2,True,SEA: LDE Leonard Williams (Out); LT Charles Cross (Out); LG Quenton Nelson (Out); QB Sam Darnold (Out),dome/roof - no weather effect,False,
-2026-11-15 16:25,SF @ DAL,-3.5,-7.99,-4.49,away,22.3,55.5,50.84,-4.66,under,20.8,True,SF: WR Mike Evans (Out); WLB Dre Greenlaw (Questionable); LCB Renardo Green (Questionable); RCB Deommodore Lenoir (Questionable); NB Upton Stout (Questionable); LT Trent Williams (Questionable) | DAL: SLB Donovan Ezeiruaku (Out); SS P.J. Locke (Out); TE Jake Ferguson (Out); LCB Joey Porter Jr. (Questionable); RCB DaRon Bland (Questionable),dome/roof - no weather effect,False,
-2026-11-15 20:20,PIT @ CIN,3.5,3.86,0.36,home,-2.4,49.5,46.75,-2.75,under,10.6,False,PIT: LDE Derrick Harmon (Questionable),"wind 3 mph, 38F",False,rest: PIT 14d @ CIN 7d (PIT off bye)
-2026-11-16 20:15,LAC @ BAL,4.5,4.79,0.29,home,-2.8,38.5,43.02,4.52,over,20.1,False,LAC: RDE Justin Eboigbe (Questionable); WR Ladd McConkey (Questionable); LG Kayode Awosika (Questionable) | BAL: SS Jaylinn Hawkins (Out),"wind 5 mph (gusts 10), 41F",False,rest: LAC 8d @ BAL 11d (BAL off bye)
-2026-11-19 20:15,IND @ HOU,9.5,5.46,-4.04,away,19.7,44.5,44.37,-0.13,under,-3.8,False,,dome/roof - no weather effect,False,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
-2026-11-22 13:00,ARI @ KC,14.5,12.9,-1.6,away,5.2,41.5,46.14,4.64,over,20.7,False,,"wind 1 mph, 57F",False,
-2026-11-22 13:00,BAL @ CAR,1.5,3.65,2.15,home,8.5,44.5,46.1,1.6,over,4.3,False,,"wind 7 mph (gusts 20), 63F",False,
-2026-11-22 13:00,JAX @ NYG,-6.5,-5.89,0.61,home,-0.8,46.5,47.24,0.74,over,-0.5,False,,"wind 5 mph (gusts 15), 59F",False,rest: JAX 7d @ NYG 10d (NYG off bye)
-2026-11-22 13:00,MIA @ BUF,16.5,16.19,-0.31,away,-2.7,46.5,47.42,0.92,over,0.5,False,,"wind 8 mph (gusts 15), 57F",False,
-2026-11-22 13:00,NO @ CHI,9.5,7.89,-1.61,away,5.3,49.5,45.67,-3.83,under,16.4,False,,"wind 11 mph (gusts 16), 52F",False,rest: NO 7d @ CHI 14d (CHI off bye)
-2026-11-22 13:00,TB @ DET,6.0,1.53,-4.47,away,22.2,46.5,45.04,-1.46,under,3.5,False,,dome/roof - no weather effect,False,rest: TB 14d @ DET 7d (TB off bye)
-2026-11-22 13:00,TEN @ DAL,7.5,7.07,-0.43,away,-1.9,52.5,45.93,-6.57,under,30.5,False,,dome/roof - no weather effect,False,
-2026-11-22 16:05,NYJ @ LAC,3.0,-1.85,-4.85,away,24.3,40.5,41.73,1.23,over,2.3,False,,dome/roof - no weather effect,False,
-2026-11-22 16:25,LV @ DEN,9.5,5.48,-4.02,away,19.6,40.5,44.33,3.83,over,16.4,False,,"wind 5 mph, 49F",False,rest: LV 7d @ DEN 14d (DEN off bye)
-2026-11-22 16:25,PIT @ PHI,-4.5,-5.86,-1.36,away,3.8,38.5,41.48,2.98,over,11.8,False,,"wind 8 mph (gusts 24), 54F",False,rest: PIT 7d @ PHI 14d (PHI off bye)
-2026-11-22 20:20,MIN @ SF,3.5,9.0,5.5,home,28.0,46.5,44.77,-1.73,under,5.0,False,,neutral site - weather not checked,,
-2026-11-23 20:15,CIN @ WAS,-3.5,-5.61,-2.11,away,8.3,51.5,48.57,-2.93,under,11.6,False,,"wind 6 mph, 49F",False,rest: CIN 8d @ WAS 11d (WAS off bye)
+2026-11-15 20:20,PIT @ CIN,4.5,3.87,-0.63,away,-0.7,49.5,46.8,-2.7,under,10.1,False,PIT: LDE Derrick Harmon (Questionable),weather unavailable (URLError),,rest: PIT 14d @ CIN 7d (PIT off bye)
+2026-11-16 20:15,LAC @ BAL,4.5,4.76,0.26,home,-2.9,38.5,42.93,4.43,over,19.2,False,LAC: RDE Justin Eboigbe (Questionable); WR Ladd McConkey (Questionable); LG Kayode Awosika (Questionable) | BAL: SS Jaylinn Hawkins (Out),"wind 5 mph (gusts 11), 41F",False,rest: LAC 8d @ BAL 11d (BAL off bye)
+2026-11-19 20:15,IND @ HOU,10.0,5.42,-4.58,away,22.9,44.5,44.36,-0.14,under,-3.8,False,,dome/roof - no weather effect,False,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
+2026-11-22 13:00,ARI @ KC,16.5,14.07,-2.43,away,10.3,41.5,45.75,4.25,over,18.3,False,,"wind 1 mph, 57F",False,
+2026-11-22 13:00,BAL @ CAR,2.5,3.64,1.14,home,2.5,44.5,46.16,1.66,over,4.5,False,,"wind 7 mph (gusts 20), 63F",False,
+2026-11-22 13:00,JAX @ NYG,-6.0,-5.95,0.05,home,-4.2,46.5,47.31,0.81,over,-0.1,False,,"wind 5 mph (gusts 15), 59F",False,rest: JAX 7d @ NYG 10d (NYG off bye)
+2026-11-22 13:00,MIA @ BUF,16.5,16.23,-0.27,away,-2.9,46.5,47.5,1.0,over,0.9,False,,"wind 8 mph (gusts 15), 57F",False,
+2026-11-22 13:00,NO @ CHI,10.0,7.88,-2.12,away,8.4,48.5,45.64,-2.86,under,10.9,False,,"wind 11 mph (gusts 16), 52F",False,rest: NO 7d @ CHI 14d (CHI off bye)
+2026-11-22 13:00,TB @ DET,5.5,1.53,-3.97,away,19.4,46.5,45.03,-1.47,under,3.5,False,,dome/roof - no weather effect,False,rest: TB 14d @ DET 7d (TB off bye)
+2026-11-22 13:00,TEN @ DAL,7.5,6.28,-1.22,away,3.0,53.5,46.39,-7.11,under,32.7,False,,dome/roof - no weather effect,False,
+2026-11-22 16:05,NYJ @ LAC,3.0,-1.82,-4.82,away,24.3,40.5,41.66,1.16,over,1.8,False,,dome/roof - no weather effect,False,
+2026-11-22 16:25,LV @ DEN,9.5,6.22,-3.28,away,15.3,40.5,43.78,3.28,over,13.2,False,,"wind 5 mph, 49F",False,rest: LV 7d @ DEN 14d (DEN off bye)
+2026-11-22 20:20,MIN @ SF,3.0,9.53,6.53,home,33.8,45.5,45.88,0.38,over,-2.5,False,,neutral site - weather not checked,,
