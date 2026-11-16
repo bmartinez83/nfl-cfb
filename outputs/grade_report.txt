@@ -24,12 +24,12 @@ Treat results as noise until n is in the hundreds.
   season 2023: 272 games, 272 with final scores
   season 2024: 272 games, 272 with final scores
   season 2025: 272 games, 272 with final scores
-  season 2026: 272 games, 147 with final scores
-games logged: 27 | finished and gradeable: 11 | pending: 16
+  season 2026: 272 games, 149 with final scores
+games logged: 27 | finished and gradeable: 13 | pending: 14
 
-SPREAD leans (ATS at first logged line): 7-4-0  win% 63.6 (95% CI 35.4-84.8, breakeven 52.4)  ROI at -110 +21.5%
-TOTAL leans (at first logged line): 8-3-0  win% 72.7 (95% CI 43.4-90.3, breakeven 52.4)  ROI at -110 +38.8%
-CLV spread: avg -0.14 pts vs last logged line | line moved in your favor 2, against 4, unchanged 5
-CLV total: avg -0.09 pts vs last logged line | line moved in your favor 2, against 4, unchanged 5
+SPREAD leans (ATS at first logged line): 9-4-0  win% 69.2 (95% CI 42.4-87.3, breakeven 52.4)  ROI at -110 +32.2%
+TOTAL leans (at first logged line): 8-5-0  win% 61.5 (95% CI 35.5-82.3, breakeven 52.4)  ROI at -110 +17.5%
+CLV spread: avg -0.04 pts vs last logged line | line moved in your favor 3, against 4, unchanged 6
+CLV total: avg -0.08 pts vs last logged line | line moved in your favor 2, against 4, unchanged 7
 
 (CLV uses the LAST logged line as the close. Run a snapshot shortly before kickoff for it to mean anything.)
