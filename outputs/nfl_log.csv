@@ -131,3 +131,16 @@ run_ts_utc,season,week,game_id,gameday,gametime,away,home,spread_line,total_line
 2026-11-16T04:06:57+00:00,2026,11,2026_11_NYJ_LAC,2026-11-22,16:05,NYJ,LAC,3.0,40.5,-180.0,150.0,-1.82,41.66,0.4134,-4.82,1.16,away,over,0.0,,dome/roof - no weather effect,
 2026-11-16T04:06:57+00:00,2026,11,2026_11_LV_DEN,2026-11-22,16:25,LV,DEN,9.5,40.5,-500.0,380.0,6.22,43.78,0.6783,-3.28,3.28,away,over,0.0,,"wind 5 mph, 49F",rest: LV 7d @ DEN 14d (DEN off bye)
 2026-11-16T04:06:57+00:00,2026,11,2026_11_MIN_SF,2026-11-22,20:20,MIN,SF,3.0,45.5,-155.0,130.0,9.53,45.88,0.8041,6.53,0.38,home,over,0.0,,neutral site - weather not checked,
+2026-11-16T21:35:05+00:00,2026,10,2026_10_LAC_BAL,2026-11-16,20:15,LAC,BAL,4.5,39.5,-225.0,185.0,4.74,42.9,0.6345,0.24,3.4,home,over,0.0,LAC: RDE Justin Eboigbe (Questionable); WR Ladd McConkey (Questionable); LG Kayode Awosika (Questionable) | BAL: SS Jaylinn Hawkins (Out),"wind 6 mph, 43F",rest: LAC 8d @ BAL 11d (BAL off bye)
+2026-11-16T21:35:05+00:00,2026,11,2026_11_IND_HOU,2026-11-19,20:15,IND,HOU,11.5,44.5,-650.0,470.0,5.37,44.37,0.6649,-6.13,-0.13,away,under,0.0,,dome/roof - no weather effect,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
+2026-11-16T21:35:05+00:00,2026,11,2026_11_ARI_KC,2026-11-22,13:00,ARI,KC,16.5,40.5,-1600.0,900.0,14.08,45.75,0.824,-2.42,5.25,away,over,0.0,,"wind 10 mph, 51F",
+2026-11-16T21:35:05+00:00,2026,11,2026_11_BAL_CAR,2026-11-22,13:00,BAL,CAR,2.5,44.5,-135.0,114.0,3.64,46.16,0.6104,1.14,1.66,home,over,0.0,,"wind 7 mph (gusts 20), 57F",
+2026-11-16T21:35:05+00:00,2026,11,2026_11_MIA_BUF,2026-11-22,13:00,MIA,BUF,16.5,45.5,-1450.0,850.0,13.47,47.5,0.8466,-3.03,2.0,away,over,0.0,,"wind 15 mph (gusts 28), 57F",
+2026-11-16T21:35:05+00:00,2026,11,2026_11_NO_CHI,2026-11-22,13:00,NO,CHI,11.5,48.5,-675.0,490.0,7.83,45.6,0.7362,-3.67,-2.9,away,under,0.0,,"wind 11 mph (gusts 17), 48F",rest: NO 7d @ CHI 14d (CHI off bye)
+2026-11-16T21:35:05+00:00,2026,11,2026_11_TB_DET,2026-11-22,13:00,TB,DET,6.5,46.5,-285.0,230.0,1.61,45.08,0.5203,-4.89,-1.42,away,under,0.0,,dome/roof - no weather effect,rest: TB 14d @ DET 7d (TB off bye)
+2026-11-16T21:35:05+00:00,2026,11,2026_11_TEN_DAL,2026-11-22,13:00,TEN,DAL,8.5,54.5,-470.0,360.0,6.32,46.4,0.7062,-2.18,-8.1,away,under,0.0,,dome/roof - no weather effect,
+2026-11-16T21:35:05+00:00,2026,11,2026_11_NYJ_LAC,2026-11-22,16:05,NYJ,LAC,3.0,40.5,-175.0,145.0,-1.79,41.66,0.4144,-4.79,1.16,away,over,0.0,,dome/roof - no weather effect,
+2026-11-16T21:35:05+00:00,2026,11,2026_11_LV_DEN,2026-11-22,16:25,LV,DEN,10.0,40.5,-575.0,425.0,6.14,43.76,0.6763,-3.86,3.26,away,over,0.0,,"wind 6 mph, 47F",rest: LV 7d @ DEN 14d (DEN off bye)
+2026-11-16T21:35:05+00:00,2026,11,2026_11_PIT_PHI,2026-11-22,16:25,PIT,PHI,-4.5,38.5,170.0,-205.0,-4.24,41.39,0.379,0.26,2.89,home,over,0.0,,"wind 4 mph (gusts 10), 59F",rest: PIT 7d @ PHI 14d (PHI off bye)
+2026-11-16T21:35:05+00:00,2026,11,2026_11_MIN_SF,2026-11-22,20:20,MIN,SF,3.0,46.5,-162.0,136.0,9.59,45.9,0.805,6.59,-0.6,home,under,0.0,,neutral site - weather not checked,
+2026-11-16T21:35:05+00:00,2026,11,2026_11_CIN_WAS,2026-11-23,20:15,CIN,WAS,-6.5,52.5,245.0,-305.0,-7.03,49.21,0.3106,-0.53,-3.29,away,under,0.0,,"wind 9 mph (gusts 22), 42F",rest: CIN 8d @ WAS 11d (WAS off bye)

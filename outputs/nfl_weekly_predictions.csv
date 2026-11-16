@@ -1,14 +1,15 @@
 kickoff,game,spread_line,model_margin,gap_spread,spread_lean,ev_spread_pct,total_line,model_total,gap_total,total_lean,ev_total_pct,inj_hold,inj_note,wx_note,wx_flag,rest_note
-2026-11-15 20:20,PIT @ CIN,4.5,3.87,-0.63,away,-0.7,49.5,46.8,-2.7,under,10.1,False,PIT: LDE Derrick Harmon (Questionable),weather unavailable (URLError),,rest: PIT 14d @ CIN 7d (PIT off bye)
-2026-11-16 20:15,LAC @ BAL,4.5,4.76,0.26,home,-2.9,38.5,42.93,4.43,over,19.2,False,LAC: RDE Justin Eboigbe (Questionable); WR Ladd McConkey (Questionable); LG Kayode Awosika (Questionable) | BAL: SS Jaylinn Hawkins (Out),"wind 5 mph (gusts 11), 41F",False,rest: LAC 8d @ BAL 11d (BAL off bye)
-2026-11-19 20:15,IND @ HOU,10.0,5.42,-4.58,away,22.9,44.5,44.36,-0.14,under,-3.8,False,,dome/roof - no weather effect,False,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
-2026-11-22 13:00,ARI @ KC,16.5,14.07,-2.43,away,10.3,41.5,45.75,4.25,over,18.3,False,,"wind 1 mph, 57F",False,
-2026-11-22 13:00,BAL @ CAR,2.5,3.64,1.14,home,2.5,44.5,46.16,1.66,over,4.5,False,,"wind 7 mph (gusts 20), 63F",False,
-2026-11-22 13:00,JAX @ NYG,-6.0,-5.95,0.05,home,-4.2,46.5,47.31,0.81,over,-0.1,False,,"wind 5 mph (gusts 15), 59F",False,rest: JAX 7d @ NYG 10d (NYG off bye)
-2026-11-22 13:00,MIA @ BUF,16.5,16.23,-0.27,away,-2.9,46.5,47.5,1.0,over,0.9,False,,"wind 8 mph (gusts 15), 57F",False,
-2026-11-22 13:00,NO @ CHI,10.0,7.88,-2.12,away,8.4,48.5,45.64,-2.86,under,10.9,False,,"wind 11 mph (gusts 16), 52F",False,rest: NO 7d @ CHI 14d (CHI off bye)
-2026-11-22 13:00,TB @ DET,5.5,1.53,-3.97,away,19.4,46.5,45.03,-1.47,under,3.5,False,,dome/roof - no weather effect,False,rest: TB 14d @ DET 7d (TB off bye)
-2026-11-22 13:00,TEN @ DAL,7.5,6.28,-1.22,away,3.0,53.5,46.39,-7.11,under,32.7,False,,dome/roof - no weather effect,False,
-2026-11-22 16:05,NYJ @ LAC,3.0,-1.82,-4.82,away,24.3,40.5,41.66,1.16,over,1.8,False,,dome/roof - no weather effect,False,
-2026-11-22 16:25,LV @ DEN,9.5,6.22,-3.28,away,15.3,40.5,43.78,3.28,over,13.2,False,,"wind 5 mph, 49F",False,rest: LV 7d @ DEN 14d (DEN off bye)
-2026-11-22 20:20,MIN @ SF,3.0,9.53,6.53,home,33.8,45.5,45.88,0.38,over,-2.5,False,,neutral site - weather not checked,,
+2026-11-16 20:15,LAC @ BAL,4.5,4.74,0.24,home,-3.1,39.5,42.9,3.4,over,13.9,False,LAC: RDE Justin Eboigbe (Questionable); WR Ladd McConkey (Questionable); LG Kayode Awosika (Questionable) | BAL: SS Jaylinn Hawkins (Out),"wind 6 mph, 43F",False,rest: LAC 8d @ BAL 11d (BAL off bye)
+2026-11-19 20:15,IND @ HOU,11.5,5.37,-6.13,away,31.5,44.5,44.37,-0.13,under,-3.8,False,,dome/roof - no weather effect,False,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
+2026-11-22 13:00,ARI @ KC,16.5,14.08,-2.42,away,10.2,40.5,45.75,5.25,over,23.5,False,,"wind 10 mph, 51F",False,
+2026-11-22 13:00,BAL @ CAR,2.5,3.64,1.14,home,2.4,44.5,46.16,1.66,over,4.5,False,,"wind 7 mph (gusts 20), 57F",False,
+2026-11-22 13:00,JAX @ NYG,-6.0,-5.98,0.02,home,-4.4,46.5,47.3,0.8,over,-0.1,False,,"wind 1 mph, 63F",False,rest: JAX 7d @ NYG 10d (NYG off bye)
+2026-11-22 13:00,MIA @ BUF,16.5,13.47,-3.03,away,13.8,45.5,47.5,2.0,over,6.4,False,,"wind 15 mph (gusts 28), 57F",True,
+2026-11-22 13:00,NO @ CHI,11.5,7.83,-3.67,away,17.6,48.5,45.6,-2.9,under,11.2,False,,"wind 11 mph (gusts 17), 48F",False,rest: NO 7d @ CHI 14d (CHI off bye)
+2026-11-22 13:00,TB @ DET,6.5,1.61,-4.89,away,24.6,46.5,45.08,-1.42,under,3.2,False,,dome/roof - no weather effect,False,rest: TB 14d @ DET 7d (TB off bye)
+2026-11-22 13:00,TEN @ DAL,8.5,6.32,-2.18,away,8.7,54.5,46.4,-8.1,under,37.4,False,,dome/roof - no weather effect,False,
+2026-11-22 16:05,NYJ @ LAC,3.0,-1.79,-4.79,away,24.0,40.5,41.66,1.16,over,1.8,False,,dome/roof - no weather effect,False,
+2026-11-22 16:25,LV @ DEN,10.0,6.14,-3.86,away,18.7,40.5,43.76,3.26,over,13.1,False,,"wind 6 mph, 47F",False,rest: LV 7d @ DEN 14d (DEN off bye)
+2026-11-22 16:25,PIT @ PHI,-4.5,-4.24,0.26,home,-3.0,38.5,41.39,2.89,over,11.2,False,,"wind 4 mph (gusts 10), 59F",False,rest: PIT 7d @ PHI 14d (PHI off bye)
+2026-11-22 20:20,MIN @ SF,3.0,9.59,6.59,home,33.9,46.5,45.9,-0.6,under,-1.3,False,,neutral site - weather not checked,,
+2026-11-23 20:15,CIN @ WAS,-6.5,-7.03,-0.53,away,-1.3,52.5,49.21,-3.29,under,13.3,False,,"wind 9 mph (gusts 22), 42F",False,rest: CIN 8d @ WAS 11d (WAS off bye)
