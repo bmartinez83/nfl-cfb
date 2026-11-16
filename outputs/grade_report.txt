@@ -1,15 +1,17 @@
 === CFB ===
-logged games: 72 | finished and gradeable: 8 | still pending: 64
+logged games: 72 | finished and gradeable: 61 | still pending: 11
 
 TOTALS (entry = first logged total; lean over/under; borderline signal in testing):
-  all leans: 5-3  = 62.5%  (95% CI 30.6-86.3%, n=8)  ROI at -110: +19.3%
+  all leans: 22-39  = 36.1%  (95% CI 25.2-48.6%, n=61)  ROI at -110: -31.1%
+  largest third by |pred|: 7-14  = 33.3%  (95% CI 17.2-54.6%, n=21)  ROI at -110: -36.4%
 
 LINE MOVES (entry spread -> latest spread in your data; direction of the lean):
-  lean matched the move (0 games did not move): 4-4  = 50.0%  (95% CI 21.5-78.5%, n=8)
+  lean matched the move (7 games did not move): 26-28  = 48.1%  (95% CI 35.4-61.1%, n=54)
   (50% = coin flip. 'Latest' is the last line CFBD holds, a proxy for the close.)
 
 SIDES (entry = first logged spread; NO edge found in testing, shown for the record):
-  all side leans: 3-4-1  = 42.9%  (95% CI 15.8-75.0%, n=7)  ROI at -110: -18.2%
+  all side leans: 29-31-1  = 48.3%  (95% CI 36.2-60.7%, n=60)  ROI at -110: -7.7%
+  largest third by |pred|: 7-13  = 35.0%  (95% CI 18.1-56.7%, n=20)  ROI at -110: -33.2%
 
 per-game detail: /home/runner/work/nfl-cfb/nfl-cfb/outputs/cfb_graded.csv
 Treat results as noise until n is in the hundreds.
@@ -22,12 +24,12 @@ Treat results as noise until n is in the hundreds.
   season 2023: 272 games, 272 with final scores
   season 2024: 272 games, 272 with final scores
   season 2025: 272 games, 272 with final scores
-  season 2026: 272 games, 137 with final scores
-games logged: 26 | finished and gradeable: 1 | pending: 25
+  season 2026: 272 games, 147 with final scores
+games logged: 27 | finished and gradeable: 11 | pending: 16
 
-SPREAD leans (ATS at first logged line): 0-1-0  win% 0.0 (95% CI 0.0-79.3, breakeven 52.4)  ROI at -110 -100.0%
-TOTAL leans (at first logged line): 1-0-0  win% 100.0 (95% CI 20.7-100.0, breakeven 52.4)  ROI at -110 +90.9%
-CLV spread: avg -1.00 pts vs last logged line | line moved in your favor 0, against 1, unchanged 0
-CLV total: avg +0.00 pts vs last logged line | line moved in your favor 0, against 0, unchanged 1
+SPREAD leans (ATS at first logged line): 7-4-0  win% 63.6 (95% CI 35.4-84.8, breakeven 52.4)  ROI at -110 +21.5%
+TOTAL leans (at first logged line): 8-3-0  win% 72.7 (95% CI 43.4-90.3, breakeven 52.4)  ROI at -110 +38.8%
+CLV spread: avg -0.14 pts vs last logged line | line moved in your favor 2, against 4, unchanged 5
+CLV total: avg -0.09 pts vs last logged line | line moved in your favor 2, against 4, unchanged 5
 
 (CLV uses the LAST logged line as the close. Run a snapshot shortly before kickoff for it to mean anything.)
