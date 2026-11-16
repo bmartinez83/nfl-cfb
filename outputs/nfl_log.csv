@@ -144,3 +144,7 @@ run_ts_utc,season,week,game_id,gameday,gametime,away,home,spread_line,total_line
 2026-11-16T21:35:05+00:00,2026,11,2026_11_PIT_PHI,2026-11-22,16:25,PIT,PHI,-4.5,38.5,170.0,-205.0,-4.24,41.39,0.379,0.26,2.89,home,over,0.0,,"wind 4 mph (gusts 10), 59F",rest: PIT 7d @ PHI 14d (PHI off bye)
 2026-11-16T21:35:05+00:00,2026,11,2026_11_MIN_SF,2026-11-22,20:20,MIN,SF,3.0,46.5,-162.0,136.0,9.59,45.9,0.805,6.59,-0.6,home,under,0.0,,neutral site - weather not checked,
 2026-11-16T21:35:05+00:00,2026,11,2026_11_CIN_WAS,2026-11-23,20:15,CIN,WAS,-6.5,52.5,245.0,-305.0,-7.03,49.21,0.3106,-0.53,-3.29,away,under,0.0,,"wind 9 mph (gusts 22), 42F",rest: CIN 8d @ WAS 11d (WAS off bye)
+2026-11-16T23:18:33+00:00,2026,11,2026_11_JAX_NYG,2026-11-22,13:00,JAX,NYG,-6.0,46.5,220.0,-270.0,-5.98,47.3,0.3349,0.02,0.8,home,over,0.0,,"wind 1 mph, 63F",rest: JAX 7d @ NYG 10d (NYG off bye)
+2026-11-16T23:18:33+00:00,2026,11,2026_11_TEN_DAL,2026-11-22,13:00,TEN,DAL,8.5,54.5,-425.0,330.0,6.32,46.4,0.7062,-2.18,-8.1,away,under,0.0,,dome/roof - no weather effect,
+2026-11-16T23:18:33+00:00,2026,11,2026_11_LV_DEN,2026-11-22,16:25,LV,DEN,10.0,40.5,-550.0,410.0,6.14,43.76,0.6763,-3.86,3.26,away,over,0.0,,"wind 6 mph, 47F",rest: LV 7d @ DEN 14d (DEN off bye)
+2026-11-16T23:18:33+00:00,2026,11,2026_11_MIN_SF,2026-11-22,20:20,MIN,SF,3.0,46.5,-166.0,140.0,9.59,45.9,0.805,6.59,-0.6,home,under,0.0,,neutral site - weather not checked,
