@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import io
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -35,10 +36,25 @@ LAST_SEASON = 2026  # current season; files for it update weekly
 RAW = Path(__file__).resolve().parent.parent / "data" / "raw"
 
 
-def fetch(url: str) -> bytes:
+def fetch(url: str, tries: int = 4) -> bytes:
+    """Download with retries: a one-off network blip on the runner should not kill a whole scan."""
+    import time
     req = urllib.request.Request(url, headers={"User-Agent": "nfl-model-ingest"})
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        return resp.read()
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                return resp.read()
+        except urllib.error.HTTPError as exc:
+            if exc.code < 500 and exc.code != 429:     # 404 etc. will not fix itself
+                raise
+            err = exc
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+            err = exc
+        if i < tries - 1:
+            wait = 5 * (i + 1)
+            print(f"  download retry {i + 1}/{tries - 1} in {wait}s ({err.__class__.__name__})")
+            time.sleep(wait)
+    raise err
 
 
 def main() -> int:

@@ -66,15 +66,27 @@ def fetch(path: str, params: dict, key: str):
     req = urllib.request.Request(url, headers={
         "Authorization": f"Bearer {key}", "Accept": "application/json",
         "User-Agent": "cfb-model-pull"})
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            return json.loads(resp.read())
-    except urllib.error.HTTPError as e:
-        if e.code in (401, 403):
-            raise QuotaOrAuth(f"HTTP {e.code} on {path}: key rejected or not permitted") from e
-        if e.code == 429:
-            raise QuotaOrAuth(f"HTTP 429 on {path}: quota/rate limit hit - stop and retry later") from e
-        raise
+    import http.client, time
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                return json.loads(resp.read())
+        except urllib.error.HTTPError as e:
+            if e.code in (401, 403):
+                raise QuotaOrAuth(f"HTTP {e.code} on {path}: key rejected or not permitted") from e
+            if e.code == 429:
+                raise QuotaOrAuth(f"HTTP 429 on {path}: quota/rate limit hit - stop and retry later") from e
+            if e.code < 500 or attempt == 2:
+                raise
+        except (http.client.IncompleteRead, http.client.RemoteDisconnected, ConnectionError, TimeoutError,
+                urllib.error.URLError) as e:
+            # a response cut off mid-download is a network blip, not a code bug: retry, then surface as URLError
+            if attempt == 2:
+                if isinstance(e, urllib.error.URLError):
+                    raise
+                raise urllib.error.URLError(f"{e.__class__.__name__} on {path}") from e
+        print(f"  retrying {path} ({attempt + 1}/2) after a network error")
+        time.sleep(5 * (attempt + 1))
 
 
 def flatten_lines(games: list[dict]) -> pd.DataFrame:
