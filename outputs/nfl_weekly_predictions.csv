@@ -1,15 +1,14 @@
 kickoff,game,spread_line,model_margin,gap_spread,spread_lean,ev_spread_pct,total_line,model_total,gap_total,total_lean,ev_total_pct,inj_hold,inj_note,wx_note,wx_flag,rest_note
-2026-11-16 20:15,LAC @ BAL,4.5,4.74,0.24,home,-3.1,39.5,42.9,3.4,over,13.9,False,LAC: RDE Justin Eboigbe (Questionable); WR Ladd McConkey (Questionable); LG Kayode Awosika (Questionable) | BAL: SS Jaylinn Hawkins (Out),"wind 6 mph, 43F",False,rest: LAC 8d @ BAL 11d (BAL off bye)
-2026-11-19 20:15,IND @ HOU,11.5,5.37,-6.13,away,31.5,44.5,44.37,-0.13,under,-3.8,False,,dome/roof - no weather effect,False,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
-2026-11-22 13:00,ARI @ KC,16.5,14.08,-2.42,away,10.2,40.5,45.75,5.25,over,23.5,False,,"wind 10 mph, 53F",False,
-2026-11-22 13:00,BAL @ CAR,2.5,3.64,1.14,home,2.4,44.5,46.16,1.66,over,4.5,False,,"wind 8 mph (gusts 20), 57F",False,
-2026-11-22 13:00,JAX @ NYG,-6.0,-5.98,0.02,home,-4.4,46.5,47.3,0.8,over,-0.1,False,,"wind 4 mph, 60F",False,rest: JAX 7d @ NYG 10d (NYG off bye)
-2026-11-22 13:00,MIA @ BUF,16.5,13.47,-3.03,away,13.8,45.5,47.5,2.0,over,6.4,False,,"wind 13 mph (gusts 24), 62F",False,
-2026-11-22 13:00,NO @ CHI,11.5,7.83,-3.67,away,17.6,48.5,45.6,-2.9,under,11.2,False,,"wind 10 mph, 54F",False,rest: NO 7d @ CHI 14d (CHI off bye)
-2026-11-22 13:00,TB @ DET,6.5,1.61,-4.89,away,24.6,46.5,45.08,-1.42,under,3.2,False,,dome/roof - no weather effect,False,rest: TB 14d @ DET 7d (TB off bye)
-2026-11-22 13:00,TEN @ DAL,8.5,6.32,-2.18,away,8.7,54.5,46.4,-8.1,under,37.4,False,,dome/roof - no weather effect,False,
-2026-11-22 16:05,NYJ @ LAC,3.0,-1.79,-4.79,away,24.0,40.5,41.66,1.16,over,1.8,False,,dome/roof - no weather effect,False,
-2026-11-22 16:25,LV @ DEN,10.0,6.14,-3.86,away,18.7,40.5,43.76,3.26,over,13.1,False,,"wind 4 mph, 49F",False,rest: LV 7d @ DEN 14d (DEN off bye)
-2026-11-22 16:25,PIT @ PHI,-4.5,-4.24,0.26,home,-3.0,38.5,41.39,2.89,over,11.2,False,,"wind 2 mph, 60F",False,rest: PIT 7d @ PHI 14d (PHI off bye)
-2026-11-22 20:20,MIN @ SF,3.0,9.59,6.59,home,33.9,46.5,45.9,-0.6,under,-1.3,False,,neutral site - weather not checked,,
-2026-11-23 20:15,CIN @ WAS,-6.5,-7.03,-0.53,away,-1.3,52.5,49.21,-3.29,under,13.3,False,,"wind 12 mph (gusts 27), 51F",True,rest: CIN 8d @ WAS 11d (WAS off bye)
+2026-11-19 20:15,IND @ HOU,11.5,4.66,-6.84,away,35.4,44.5,44.54,0.04,over,-4.3,False,,dome/roof - no weather effect,False,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
+2026-11-22 13:00,ARI @ KC,16.5,13.29,-3.21,away,14.9,41.5,45.72,4.22,over,18.3,False,,"wind 9 mph, 54F",False,
+2026-11-22 13:00,BAL @ CAR,2.5,3.08,0.58,home,-1.0,44.5,46.17,1.67,over,4.6,False,,"wind 6 mph (gusts 15), 70F",False,
+2026-11-22 13:00,JAX @ NYG,-6.0,-5.44,0.56,home,-1.1,46.5,47.08,0.58,over,-1.3,False,,"wind 7 mph (gusts 20), 58F",False,rest: JAX 7d @ NYG 10d (NYG off bye)
+2026-11-22 13:00,MIA @ BUF,16.5,12.26,-4.24,away,21.0,45.5,47.44,1.94,over,6.1,False,,"wind 10 mph (gusts 28), 59F, rain 34%",True,
+2026-11-22 13:00,NO @ CHI,11.5,7.17,-4.33,away,21.5,49.5,45.67,-3.83,under,16.2,False,,"wind 16 mph (gusts 26), 48F",True,rest: NO 7d @ CHI 14d (CHI off bye)
+2026-11-22 13:00,TB @ DET,6.5,0.92,-5.58,away,28.6,46.5,45.09,-1.41,under,3.2,False,,dome/roof - no weather effect,False,rest: TB 14d @ DET 7d (TB off bye)
+2026-11-22 13:00,TEN @ DAL,8.5,5.7,-2.8,away,12.5,54.5,46.34,-8.16,under,37.8,False,,dome/roof - no weather effect,False,
+2026-11-22 16:05,NYJ @ LAC,3.0,-0.55,-3.55,away,17.0,40.5,41.83,1.33,over,2.8,False,,dome/roof - no weather effect,False,
+2026-11-22 16:25,LV @ DEN,10.0,6.04,-3.96,away,19.4,40.5,43.84,3.34,over,13.6,False,,"wind 3 mph, 51F",False,rest: LV 7d @ DEN 14d (DEN off bye)
+2026-11-22 16:25,PIT @ PHI,-4.5,-3.61,0.89,home,0.9,38.5,41.71,3.21,over,12.9,False,,"wind 12 mph (gusts 29), 58F",True,rest: PIT 7d @ PHI 14d (PHI off bye)
+2026-11-22 20:20,MIN @ SF,3.0,8.45,5.45,home,27.9,46.5,45.86,-0.64,under,-1.0,False,,neutral site - weather not checked,,
+2026-11-23 20:15,CIN @ WAS,-6.5,-6.47,0.03,home,-4.4,52.5,49.14,-3.36,under,13.7,False,,"wind 7 mph (gusts 17), 44F",False,rest: CIN 8d @ WAS 11d (WAS off bye)
