@@ -8,6 +8,7 @@ Everything on the page is a lean to LOG and GRADE. No edge has been proven.
 """
 from __future__ import annotations
 
+import re
 import argparse
 import csv
 import html
@@ -172,6 +173,86 @@ footer{font-size:12.5px;color:var(--muted);max-width:90ch}
 .scroll,.banner,pre{border-color:#bbb;background:#fff}th{background:#eee;color:#333}tr{break-inside:avoid}}
 """
 
+REC = re.compile(r"^\s*(?P<label>.+?):?\s+(?P<rec>\d+-\d+(?:-\d+)?)\s+(?:=\s*(?P<pct>[\d.]+)%|win%\s+(?P<pct2>[\d.]+))\s+"
+                 r"\(95% CI (?P<lo>[\d.]+)-(?P<hi>[\d.]+)%?(?:,\s*n=(?P<n>\d+))?(?:,\s*breakeven (?P<be>[\d.]+))?\)"
+                 r"\s*(?:ROI at -110:?\s*(?P<roi>[+-]?[\d.]+)%)?")
+CLV = re.compile(r"^CLV (?P<k>\w+): avg (?P<avg>[+-][\d.]+) pts.*in your favor (?P<f>\d+), against (?P<a>\d+), unchanged (?P<u>\d+)")
+HEAD = re.compile(r"logged games: (\d+) \| finished and gradeable: (\d+) \| (?:still )?pending: (\d+)")
+SECTION = {"TOTALS": "Totals (over / under)", "SIDES": "Sides (point spread)",
+           "LINE MOVES": "Did the line move the way we leaned?", "SPREAD": "Point-spread leans", "TOTAL": "Total (over / under) leans"}
+BREAKEVEN = 52.4
+
+
+def _plain(label: str) -> str:
+    l = label.strip()
+    if l.startswith("largest third"):
+        return "Strongest third (biggest model-vs-market gap)"
+    if l.startswith("lean matched the move"):
+        return "Line later moved toward our lean"
+    if l.startswith(("all leans", "all side leans")) or l.startswith(("SPREAD leans", "TOTAL leans")):
+        return "All leans"
+    return l[:1].upper() + l[1:]
+
+
+def _read(n: int, lo: float, hi: float) -> str:
+    if n < 100:
+        return "<span class='pill warn'>Too few games to tell</span>"
+    if lo > BREAKEVEN:
+        return "<span class='pill'>Above break-even</span>"
+    if hi < BREAKEVEN:
+        return "<span class='pill warn'>Below break-even</span>"
+    return "<span class='pill'>No clear edge</span>"
+
+
+def grade_section(text: str) -> str:
+    """Plain-English scoreboard built from grade_report.txt (falls back to the raw text if parsing finds nothing)."""
+    blocks = re.split(r"^=== (\w+) ===\s*$", text, flags=re.M)
+    out, found = [], False
+    for i in range(1, len(blocks) - 1, 2):
+        name = {"CFB": "College football", "NFL": "NFL"}.get(blocks[i], blocks[i])
+        body = blocks[i + 1]
+        h = HEAD.search(body)
+        head = (f"<p class='muted' style='margin:0 0 8px'>{h[1]} leans logged · <b>{h[2]}</b> finished and graded · {h[3]} still to play</p>"
+                if h else "")
+        rows, sect = [], ""
+        for line in body.splitlines():
+            m0 = re.match(r"^([A-Z][A-Z ]+?)(?: leans)?\b", line)
+            if m0 and m0[1].strip() in SECTION and not REC.match(line) or re.match(r"^(TOTALS|SIDES|LINE MOVES)\b", line):
+                sect = SECTION.get(re.match(r"^[A-Z ]+?(?=\s*\(|$)", line)[0].strip(), sect) if re.match(r"^[A-Z ]+", line) else sect
+            if line.startswith(("SPREAD leans", "TOTAL leans")):
+                sect = SECTION["SPREAD" if line.startswith("SPREAD") else "TOTAL"]
+            m = REC.match(line)
+            if not m:
+                continue
+            found = True
+            w = [int(x) for x in m["rec"].split("-")]
+            n = int(m["n"]) if m["n"] else w[0] + w[1]
+            pct = float(m["pct"] or m["pct2"])
+            roi = f"{float(m['roi']):+.0f}" if m["roi"] else "–"
+            rows.append(f"<tr><td>{E(sect)}</td><td>{E(_plain(m['label']))}</td><td class='num nowrap'>{E(m['rec'])}</td>"
+                        f"<td class='num'>{pct:.0f}%</td><td class='num nowrap'>{float(m['lo']):.0f}–{float(m['hi']):.0f}%</td>"
+                        f"<td class='num'>{n}</td><td class='num'>{roi if roi == '–' else roi[0] + '$' + roi[1:]}</td><td>{_read(n, float(m['lo']), float(m['hi']))}</td></tr>")
+        clv = [m for m in (CLV.match(l) for l in body.splitlines()) if m]
+        clv_html = ""
+        if clv:
+            cr = "".join(f"<tr><td>{'Spread' if m['k'] == 'spread' else 'Total'}</td><td class='num'>{float(m['avg']):+.2f} pts</td>"
+                         f"<td class='num'>{m['f']}</td><td class='num'>{m['a']}</td><td class='num'>{m['u']}</td></tr>" for m in clv)
+            clv_html = ("<h3>Did the line move our way after we logged the lean?</h3><div class='scroll'><table><thead><tr><th>Bet</th>"
+                        "<th class='num'>Average move</th><th class='num'>Moved our way</th><th class='num'>Moved against us</th>"
+                        "<th class='num'>Didn't move</th></tr></thead><tbody>" + cr + "</tbody></table></div>"
+                        "<p class='note'>Average move: positive = the line moved in our favor. It compares to the last line we logged, "
+                        "so it only means something if a snapshot ran shortly before kickoff.</p>")
+        tbl = ("<div class='scroll'><table><thead><tr><th>Bet type</th><th>Group</th><th class='num'>Record</th><th class='num'>Win %</th>"
+               "<th class='num'>Likely range*</th><th class='num'>Games</th><th class='num'>Profit per $100 bet†</th><th>Read</th></tr></thead><tbody>"
+               + "".join(rows) + "</tbody></table></div>") if rows else ""
+        out.append(f"<h3 style='margin:16px 0 6px'>{E(name)}</h3>{head}{tbl}{clv_html}")
+    if not found:
+        return f"<pre>{E(text.strip())}</pre>"
+    return "".join(out) + ("<p class='note' style='max-width:none'>Record = wins-losses (-pushes). Break-even at standard -110 prices is "
+                           "<b>52.4%</b>. *Likely range: the span the true win rate plausibly falls in (95%); a wide range means "
+                           "luck can't be ruled out. †Profit per $100 bet: flat $100 on every lean at -110. "
+                           "'Too few games to tell' shows until a group has 100+ graded games.</p>")
+
 
 def build(out: Path) -> str:
     nfl = read(out / "nfl_weekly_predictions.csv")
@@ -189,7 +270,7 @@ def build(out: Path) -> str:
         novig_section(nov),
     ]
     if grade.strip():
-        parts.append(f"<section><h2>Latest grade report</h2><pre>{E(grade.strip())}</pre></section>")
+        parts.append(f"<section><h2>Results so far: how the leans did</h2>{grade_section(grade)}</section>")
     parts.append("<footer><p>How to read: a spread lean names the team the model likes and by how many points. "
                  "A total lean shows the market total → the model's total. Edges under 0.5 points show as a dash (no lean). "
                  "*Best EV is the model's own uncalibrated expected return per 100 risked at -110 if its confidence were right. "
