@@ -1,5 +1,5 @@
 === CFB ===
-logged games: 72 | finished and gradeable: 61 | still pending: 11
+logged games: 127 | finished and gradeable: 61 | still pending: 66
 
 TOTALS (entry = first logged total; lean over/under; borderline signal in testing):
   all leans: 22-39  = 36.1%  (95% CI 25.2-48.6%, n=61)  ROI at -110: -31.1%
@@ -24,12 +24,12 @@ Treat results as noise until n is in the hundreds.
   season 2023: 272 games, 272 with final scores
   season 2024: 272 games, 272 with final scores
   season 2025: 272 games, 272 with final scores
-  season 2026: 272 games, 149 with final scores
-games logged: 27 | finished and gradeable: 13 | pending: 14
+  season 2026: 272 games, 150 with final scores
+games logged: 27 | finished and gradeable: 14 | pending: 13
 
-SPREAD leans (ATS at first logged line): 9-4-0  win% 69.2 (95% CI 42.4-87.3, breakeven 52.4)  ROI at -110 +32.2%
-TOTAL leans (at first logged line): 8-5-0  win% 61.5 (95% CI 35.5-82.3, breakeven 52.4)  ROI at -110 +17.5%
-CLV spread: avg -0.04 pts vs last logged line | line moved in your favor 3, against 4, unchanged 6
-CLV total: avg -0.08 pts vs last logged line | line moved in your favor 2, against 4, unchanged 7
+SPREAD leans (ATS at first logged line): 9-5-0  win% 64.3 (95% CI 38.8-83.7, breakeven 52.4)  ROI at -110 +22.7%
+TOTAL leans (at first logged line): 9-5-0  win% 64.3 (95% CI 38.8-83.7, breakeven 52.4)  ROI at -110 +22.7%
+CLV spread: avg -0.04 pts vs last logged line | line moved in your favor 3, against 4, unchanged 7
+CLV total: avg +0.00 pts vs last logged line | line moved in your favor 3, against 4, unchanged 7
 
 (CLV uses the LAST logged line as the close. Run a snapshot shortly before kickoff for it to mean anything.)
