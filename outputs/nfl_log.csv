@@ -181,3 +181,7 @@ run_ts_utc,season,week,game_id,gameday,gametime,away,home,spread_line,total_line
 2026-11-18T21:47:44+00:00,2026,12,2026_12_CHI_DET,2026-11-26,13:00,CHI,DET,-2.5,54.5,114.0,-135.0,2.67,48.83,0.5283,5.17,-5.67,home,under,0.0,,dome/roof - no weather effect,"rest: CHI 4d @ DET 4d (CHI short week, DET short week)"
 2026-11-18T21:47:44+00:00,2026,12,2026_12_PHI_DAL,2026-11-26,16:30,PHI,DAL,8.5,47.5,-395.0,310.0,8.34,44.58,0.7357,-0.16,-2.92,away,under,0.0,,dome/roof - no weather effect,"rest: PHI 4d @ DAL 4d (PHI short week, DAL short week)"
 2026-11-18T21:47:44+00:00,2026,12,2026_12_KC_BUF,2026-11-26,20:20,KC,BUF,3.0,50.5,-162.0,136.0,3.02,50.45,0.6088,0.02,-0.05,home,under,0.0,,"wind 4 mph, 25F","rest: KC 4d @ BUF 4d (KC short week, BUF short week)"
+2026-11-18T23:25:57+00:00,2026,11,2026_11_IND_HOU,2026-11-19,20:15,IND,HOU,12.5,43.5,-750.0,525.0,4.66,44.54,0.6357,-7.84,1.04,away,over,0.0,,dome/roof - no weather effect,"rest: IND 4d @ HOU 4d (IND short week, HOU short week)"
+2026-11-18T23:25:57+00:00,2026,11,2026_11_TEN_DAL,2026-11-22,13:00,TEN,DAL,8.5,55.5,-380.0,300.0,5.7,46.34,0.6767,-2.8,-9.16,away,under,0.0,,dome/roof - no weather effect,
+2026-11-18T23:25:57+00:00,2026,11,2026_11_NYJ_LAC,2026-11-22,16:05,NYJ,LAC,3.0,41.5,-155.0,130.0,-0.55,41.83,0.472,-3.55,0.33,away,over,0.0,,dome/roof - no weather effect,
+2026-11-18T23:25:57+00:00,2026,11,2026_11_CIN_WAS,2026-11-23,20:15,CIN,WAS,-6.5,54.5,250.0,-310.0,-6.47,49.14,0.3324,0.03,-5.36,home,under,0.0,,"wind 9 mph (gusts 25), 45F",rest: CIN 8d @ WAS 11d (WAS off bye)
