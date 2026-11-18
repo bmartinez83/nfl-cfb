@@ -211,6 +211,44 @@ def _tally(name: str, win: pd.Series, push: pd.Series) -> None:
           f"breakeven 52.4)  ROI at -110 {roi:+.1f}%")
 
 
+def _novig_clv(fin: pd.DataFrame, out: Path) -> None:
+    """CLV measured inside ONE source: Novig's hourly snapshots. Entry = the Novig snapshot nearest our first
+    logged run; close = the last Novig snapshot before kickoff. Same-source, so no cross-book bias."""
+    path = out / "novig_nfl_games.csv"
+    if not path.exists():
+        return
+    ng = pd.read_csv(path, low_memory=False)
+    ng["ts"] = pd.to_datetime(ng["ts_utc"], utc=True, errors="coerce")
+    ng["ko"] = pd.to_datetime(ng["starts_ts"], unit="ms", utc=True, errors="coerce")
+    ng = ng[ng["ts"] < ng["ko"]]                      # pre-kickoff snapshots only
+    rows = []
+    for _, r in fin.iterrows():
+        h = ng[(ng["home"] == r["home"]) & (ng["away"] == r["away"])].sort_values("ts")
+        if len(h) < 2:
+            continue
+        t0 = pd.to_datetime(r["run_ts_utc"], utc=True, errors="coerce")
+        entry = h.iloc[(h["ts"] - t0).abs().argmin()]
+        close = h.iloc[-1]
+        if entry["ts"] >= close["ts"]:
+            continue
+        rows.append({
+            "hrs": (close["ts"] - entry["ts"]).total_seconds() / 3600,
+            "sp": (close["home_spread_line"] - entry["home_spread_line"]) * (1 if r["spread_lean"] == "home" else -1),
+            "tt": (close["total_line"] - entry["total_line"]) * (1 if r["total_lean"] == "over" else -1)})
+    d = pd.DataFrame(rows)
+    print("\nCLV vs NOVIG close (same-source: our entry time -> last Novig snapshot before kickoff)")
+    if d.empty:
+        print("  not enough Novig snapshots yet for finished games")
+        return
+    for name, col in (("spread", "sp"), ("total", "tt")):
+        x = d[col].dropna()
+        if x.empty:
+            continue
+        print(f"  Novig CLV {name}: avg {x.mean():+.2f} pts over {len(x)} games | in your favor "
+              f"{int((x > 0).sum())}, against {int((x < 0).sum())}, unchanged {int((x == 0).sum())}")
+    print(f"  (avg window {d['hrs'].mean():.0f}h between entry and close; positive = the market moved toward our lean)")
+
+
 def run_grade(args) -> None:
     out = Path(args.out)
     log = _load_log(out / "nfl_log.csv")
@@ -251,8 +289,8 @@ def run_grade(args) -> None:
         print(f"CLV {name}: avg {np.mean(clv):+.2f} pts vs last logged line | "
               f"line moved in your favor {int((clv > 0).sum())}, against {int((clv < 0).sum())}, "
               f"unchanged {int((~moved).sum())}")
-    print("\n(CLV uses the LAST logged line as the close. Run a snapshot shortly before kickoff for it "
-          "to mean anything.)")
+    print("\n(The CLV above uses our own LAST logged line as the close - a weak proxy.)")
+    _novig_clv(fin, out)
     fin.drop(columns=["pts"]).to_csv(out / "nfl_graded.csv", index=False)
 
 
