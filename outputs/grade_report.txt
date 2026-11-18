@@ -1,17 +1,17 @@
 === CFB ===
-logged games: 127 | finished and gradeable: 61 | still pending: 66
+logged games: 127 | finished and gradeable: 64 | still pending: 63
 
 TOTALS (entry = first logged total; lean over/under; borderline signal in testing):
-  all leans: 22-39  = 36.1%  (95% CI 25.2-48.6%, n=61)  ROI at -110: -31.1%
-  largest third by |pred|: 7-14  = 33.3%  (95% CI 17.2-54.6%, n=21)  ROI at -110: -36.4%
+  all leans: 24-40  = 37.5%  (95% CI 26.7-49.7%, n=64)  ROI at -110: -28.4%
+  largest third by |pred|: 9-13  = 40.9%  (95% CI 23.3-61.3%, n=22)  ROI at -110: -21.9%
 
 LINE MOVES (entry spread -> latest spread in your data; direction of the lean):
-  lean matched the move (7 games did not move): 26-28  = 48.1%  (95% CI 35.4-61.1%, n=54)
+  lean matched the move (7 games did not move): 28-29  = 49.1%  (95% CI 36.6-61.7%, n=57)
   (50% = coin flip. 'Latest' is the last line CFBD holds, a proxy for the close.)
 
 SIDES (entry = first logged spread; NO edge found in testing, shown for the record):
-  all side leans: 29-31-1  = 48.3%  (95% CI 36.2-60.7%, n=60)  ROI at -110: -7.7%
-  largest third by |pred|: 7-13  = 35.0%  (95% CI 18.1-56.7%, n=20)  ROI at -110: -33.2%
+  all side leans: 30-33-1  = 47.6%  (95% CI 35.8-59.7%, n=63)  ROI at -110: -9.1%
+  largest third by |pred|: 8-13  = 38.1%  (95% CI 20.8-59.1%, n=21)  ROI at -110: -27.3%
 
 per-game detail: /home/runner/work/nfl-cfb/nfl-cfb/outputs/cfb_graded.csv
 Treat results as noise until n is in the hundreds.
@@ -25,7 +25,7 @@ Treat results as noise until n is in the hundreds.
   season 2024: 272 games, 272 with final scores
   season 2025: 272 games, 272 with final scores
   season 2026: 272 games, 150 with final scores
-games logged: 27 | finished and gradeable: 14 | pending: 13
+games logged: 31 | finished and gradeable: 14 | pending: 17
 
 SPREAD leans (ATS at first logged line): 9-5-0  win% 64.3 (95% CI 38.8-83.7, breakeven 52.4)  ROI at -110 +22.7%
 TOTAL leans (at first logged line): 9-5-0  win% 64.3 (95% CI 38.8-83.7, breakeven 52.4)  ROI at -110 +22.7%
