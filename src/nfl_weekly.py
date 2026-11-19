@@ -32,6 +32,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import picks  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ET = ZoneInfo("America/New_York")
@@ -39,8 +40,8 @@ ET = ZoneInfo("America/New_York")
 LOG_COLS = ["run_ts_utc", "season", "week", "game_id", "gameday", "gametime", "away", "home",
             "spread_line", "total_line", "home_ml", "away_ml",
             "model_margin", "model_total", "model_prob_home",
-            "gap_spread", "gap_total", "spread_lean", "total_lean", "inj_hold", "inj_note", "wx_note", "rest_note"]
-LINE_COLS = ["spread_line", "total_line", "home_ml", "away_ml", "inj_note"]
+            "gap_spread", "gap_total", "spread_lean", "total_lean", "inj_hold", "inj_note", "wx_note", "rest_note", "qb_adj", "qb_hold", "qb_note"]
+LINE_COLS = ["spread_line", "total_line", "home_ml", "away_ml", "inj_note", "qb_note"]
 
 
 def _now(args_now: str | None) -> datetime:
@@ -115,6 +116,7 @@ def run_score(args) -> None:
     print(f"data as of: last played game {played['gameday'].max()} | today (ET) {today}")
     print(f"model trained on {bundle['n_train']} games through {bundle['trained_through']}")
 
+    pred = _apply_qb(pred, played, bundle["margin_sd"])
     pred["gap_spread"] = pred["model_margin"] - pred["spread_line"]
     pred["gap_total"] = pred["model_total"] - pred["total_line"]
     pred["spread_lean"] = np.where(pred["gap_spread"] > 0, "home", "away")
@@ -152,6 +154,7 @@ def run_score(args) -> None:
         "spread_lean": pred["spread_lean"], "total_lean": pred["total_lean"],
         "inj_hold": pred["inj_hold"], "inj_note": pred["inj_note"], "wx_note": pred["wx_note"],
         "rest_note": pred["rest_note"],
+        "qb_adj": pred["qb_adj"], "qb_hold": pred["qb_hold"], "qb_note": pred["qb_note"],
     })[LOG_COLS]
 
     log_path = out / "nfl_log.csv"
@@ -173,10 +176,18 @@ def run_score(args) -> None:
     view = pred.assign(
         kickoff=pred["gameday"].astype(str) + " " + pred["gametime"].fillna("").astype(str),
         game=pred["away_team"] + " @ " + pred["home_team"])
-    cols = ["kickoff", "game", "spread_line", "model_margin", "gap_spread", "spread_lean",
+    view.loc[view["qb_hold"].astype(bool), ["ev_spread_pct", "ev_total_pct"]] = np.nan   # model EV is meaningless here
+    NOQB = "NO LEAN - QB CHANGE"
+    view["spread_pick"] = [NOQB if r.qb_hold else
+                           picks.spread_pick(r.home_team, r.away_team, r.spread_lean, -r.spread_line, r.gap_spread)
+                           if abs(r.gap_spread) >= 0.5 else "" for r in view.itertuples()]
+    view["total_pick"] = [NOQB if r.qb_hold else picks.total_pick(r.total_lean, r.total_line, r.model_total)
+                          if abs(r.gap_total) >= 0.5 else "" for r in view.itertuples()]
+    cols = ["kickoff", "game", "spread_pick", "total_pick", "spread_line", "model_margin", "gap_spread", "spread_lean",
             "ev_spread_pct", "total_line", "model_total", "gap_total", "total_lean", "ev_total_pct",
-            "inj_hold", "inj_note", "wx_note", "wx_flag", "rest_note"]
+            "inj_hold", "inj_note", "qb_hold", "qb_note", "wx_note", "wx_flag", "rest_note"]
     pd.set_option("display.width", 250)
+    print("\nspread_pick = bet that team against the point spread (NOT the moneyline). total_pick = Over/Under the posted total; 'model' = the model's own projected total.")
     print("\n" + view[cols].round(1).to_string(index=False))
     view[cols].round(2).to_csv(out / "nfl_weekly_predictions.csv", index=False)
     print("\nspread_line is the HOME margin the market expects (positive = home favored). "
@@ -249,6 +260,33 @@ def _novig_clv(fin: pd.DataFrame, out: Path) -> None:
     print(f"  (avg window {d['hrs'].mean():.0f}h between entry and close; positive = the market moved toward our lean)")
 
 
+def _apply_qb(pred: pd.DataFrame, played: pd.DataFrame, margin_sd: float) -> pd.DataFrame:
+    """Adjust model_margin for the QB actually starting (see qb.py). Never breaks the scan: on any failure the
+    model is left as it was and the note says so."""
+    from math import erf, sqrt
+    pred = pred.copy()
+    pred["qb_adj"], pred["qb_hold"], pred["qb_note"] = 0.0, False, ""
+    try:
+        import injuries
+        import qb
+        season = int(pred["season"].iloc[0])
+        stats = qb.fetch_qb_games(range(season - 2, season + 1), ROOT / "data" / "raw" / "qb_week.csv")
+        if stats.empty:
+            raise RuntimeError("no QB stats")
+        inj, dc = injuries.load(season)
+        pred = qb.adjust(pred, stats, dc, inj, season)
+        phi = lambda m: 0.5 * (1 + np.vectorize(erf)(m / (margin_sd * sqrt(2))))  # noqa: E731
+        old = pred["model_margin"].astype(float)
+        pred["model_margin"] = old + pred["qb_adj"]
+        pred["model_prob_home"] = np.clip(pred["model_prob_home"] + phi(pred["model_margin"]) - phi(old), 0.01, 0.99)
+        n = int((pred["qb_adj"].abs() > 0).sum())
+        print(f"QB adjustment applied to {n} game(s); {int(pred['qb_hold'].sum())} marked QB change (no lean)")
+    except Exception as e:  # noqa: BLE001
+        print(f"WARNING: QB adjustment skipped ({e.__class__.__name__}: {e})")
+        pred["qb_adj"], pred["qb_hold"], pred["qb_note"] = 0.0, False, "QB data unavailable - no QB adjustment"
+    return pred
+
+
 def run_grade(args) -> None:
     out = Path(args.out)
     log = _load_log(out / "nfl_log.csv")
@@ -273,12 +311,18 @@ def run_grade(args) -> None:
     cover = fin["margin"] - fin["spread_line"]
     push = cover == 0
     win = ((cover > 0) & (fin["spread_lean"] == "home")) | ((cover < 0) & (fin["spread_lean"] == "away"))
-    print()
-    _tally("SPREAD leans (ATS at first logged line)", win, push)
     diff = fin["pts"] - fin["total_line"]
     push_t = diff == 0
     win_t = ((diff > 0) & (fin["total_lean"] == "over")) | ((diff < 0) & (fin["total_lean"] == "under"))
-    _tally("TOTAL leans (at first logged line)", win_t, push_t)
+    # games flagged "QB change" when logged are shown separately: the model is least reliable there
+    hold = fin["qb_hold"].astype(str).str.lower().eq("true")
+    print()
+    _tally("SPREAD leans (ATS at first logged line)", win[~hold], push[~hold])
+    _tally("TOTAL leans (at first logged line)", win_t[~hold], push_t[~hold])
+    if hold.any():
+        print(f"QB-change games (flagged NO LEAN, not counted above): {int(hold.sum())} games | "
+              f"spread leans {int((win & hold).sum())}-{int((~win & ~push & hold).sum())} | "
+              f"total leans {int((win_t & hold).sum())}-{int((~win_t & ~push_t & hold).sum())}")
 
     sp_move = fin["close_spread"] - fin["spread_line"]
     clv_s = np.where(fin["spread_lean"] == "home", sp_move, -sp_move)

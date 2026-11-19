@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+import picks
+
 ROOT = Path(__file__).resolve().parent.parent
 E = html.escape
 
@@ -46,19 +48,25 @@ def nfl_rows(rows):
         sp, mm = num(r["spread_line"]), num(r["model_margin"])
         gap = num(r["gap_spread"])
         tl, mt, gt = num(r["total_line"]), num(r["model_total"]), num(r["gap_total"])
+        qbhold = str(r.get("qb_hold", "")).lower() == "true"
+        qbn = r.get("qb_note", "") or ""
         side = ""
-        if gap is not None and abs(gap) >= 0.5:
-            side = f"{home if r['spread_lean'] == 'home' else away} +{abs(gap):.1f}"
+        if qbhold:
+            side = "NO LEAN - QB change"
+        elif gap is not None and abs(gap) >= 0.5 and sp is not None:
+            side = picks.spread_pick(home, away, r["spread_lean"], -sp, gap)       # nflverse: + = home favored
         tot = ""
-        if gt is not None and abs(gt) >= 0.5:
-            tot = f"{r['total_lean'].upper()} {tl:.1f}→{mt:.1f}"
+        if qbhold:
+            tot = "NO LEAN - QB change"
+        elif gt is not None and abs(gt) >= 0.5:
+            tot = picks.total_pick(r["total_lean"], tl, mt)
         hold = str(r.get("inj_hold", "")).lower() == "true"
-        note = r.get("inj_note", "") or ""
+        note = ((qbn + " | ") if qbn else "") + (r.get("inj_note", "") or "")
         wx = r.get("wx_note", "") or ""
         wxflag = str(r.get("wx_flag", "")).lower() == "true"
         rs = r.get("rest_note", "") or ""
         out.append((r["kickoff"], f"{away} @ {home}", f"{home} {-sp:+.1f}" if sp is not None else "",
-                    side, tot, max(x for x in (num(r["ev_spread_pct"]), num(r["ev_total_pct"]), -999) if x is not None),
+                    side, tot, (None if qbhold else max(x for x in (num(r["ev_spread_pct"]), num(r["ev_total_pct"]), -999) if x is not None)),
                     hold, note, wx, wxflag, rs))
     return out
 
@@ -68,7 +76,8 @@ def nfl_section(rows):
         return "<p class='muted'>No NFL games with lines right now.</p>"
     body = []
     for k, g, line, side, tot, ev, hold, note, wx, wxflag, rs in nfl_rows(rows):
-        flag = ("<span class='pill warn'>CHECK INJURIES</span> " if hold else "") + \
+        flag = ("<span class='pill warn'>QB CHANGE</span> " if side.startswith("NO LEAN") else "") + \
+               ("<span class='pill warn'>CHECK INJURIES</span> " if hold else "") + \
                ("<span class='pill warn'>WEATHER</span>" if wxflag else "")
         n = (f"<div class='note'>{E(note)}</div>" if note else "") + \
             (f"<div class='note'>Weather: {E(wx)}</div>" if wx and not any(k in wx for k in ("no weather effect", "unavailable", "not available", "not checked")) else "") + \
@@ -76,9 +85,9 @@ def nfl_section(rows):
         body.append(f"<tr><td class='nowrap'>{E(k)}</td><td><b>{E(g)}</b>{n}</td><td class='nowrap'>{E(line)}</td>"
                     f"<td>{E(side) or '<span class=muted>—</span>'}</td>"
                     f"<td class='nowrap'>{E(tot) or '<span class=muted>—</span>'}</td>"
-                    f"<td class='num'>{ev:+.0f}%</td><td>{flag}</td></tr>")
-    return ("<div class='scroll'><table><thead><tr><th>Kickoff (ET)</th><th>Game</th><th>Home line</th>"
-            "<th>Spread lean</th><th>Total lean</th><th class='num'>Best EV*</th><th></th></tr></thead><tbody>"
+                    f"<td class='num'>{'' if ev is None else f'{ev:+.0f}%'}</td><td>{flag}</td></tr>")
+    return ("<div class='scroll'><table><thead><tr><th>Kickoff (ET)</th><th>Game</th><th>Market spread (home team)</th>"
+            "<th>Spread pick</th><th>Total pick</th><th class='num'>Best EV*</th><th></th></tr></thead><tbody>"
             + "".join(body) + "</tbody></table></div>")
 
 
@@ -92,9 +101,9 @@ def cfb_section(rows):
         sp, so = num(r["mkt_spread"]), num(r["sp_open"])
         line = f"{home} {sp:+.1f}" + (f" (open {so:+.1f})" if so is not None else "") if sp is not None else ""
         ps = num(r["pred_side_resid"])
-        side = f"{home if r['side_lean'] == 'home' else away} +{abs(ps):.1f}" if ps is not None and abs(ps) >= 0.5 else ""
+        side = picks.spread_pick(home, away, r["side_lean"], sp, ps) if ps is not None and abs(ps) >= 0.5 and sp is not None else ""
         pt, mt, ft = num(r["pred_total_resid"]), num(r["mkt_total"]), num(r["fair_total"])
-        tot = f"{r['total_lean'].upper()} {mt:.1f}→{ft:.1f}" if pt is not None and abs(pt) >= 0.5 else ""
+        tot = picks.total_pick(r["total_lean"], mt, ft) if pt is not None and abs(pt) >= 0.5 and mt is not None else ""
         rm = num(r["remaining_move"])
         mv = f"toward {home if r['move_lean'] == 'home' else away} {abs(rm):.1f}" if rm is not None and abs(rm) >= 0.5 else ""
         evs = [x for x in (num(r["ev_side_pct"]), num(r["ev_total_pct"])) if x is not None]
@@ -111,8 +120,8 @@ def cfb_section(rows):
         body.append(f"<tr><td class='nowrap'>{E(r['kickoff_pt'])}</td><td><b>{E(away)} @ {E(home)}</b>{wxn}</td>"
                     f"<td class='nowrap'>{E(line)}</td><td>{E(side) or dash}</td><td class='nowrap'>{E(tot) or dash}</td>"
                     f"<td class='nowrap'>{E(mv) or dash}</td><td class='num'>{ev}</td><td>{news}</td></tr>")
-    return ("<div class='scroll'><table><thead><tr><th>Kickoff (PT)</th><th>Game</th><th>Home line</th>"
-            "<th>Side lean</th><th>Total lean</th><th>Line move</th><th class='num'>Best EV*</th><th></th></tr></thead><tbody>"
+    return ("<div class='scroll'><table><thead><tr><th>Kickoff (PT)</th><th>Game</th><th>Market spread (home team)</th>"
+            "<th>Spread pick</th><th>Total pick</th><th>Line may move</th><th class='num'>Best EV*</th><th></th></tr></thead><tbody>"
             + "".join(body) + "</tbody></table></div>")
 
 

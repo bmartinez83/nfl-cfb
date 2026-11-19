@@ -62,6 +62,9 @@ from sklearn.linear_model import Ridge
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import picks  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 PT = ZoneInfo("America/Los_Angeles")
 
@@ -310,10 +313,10 @@ def plain_view(res: pd.DataFrame) -> pd.DataFrame:
         line = f"{h} {r.mkt_spread:+.1f}" + (f" (open {r.sp_open:+.1f})" if pd.notna(r.sp_open) else "")
         side = ""
         if pd.notna(r.pred_side_resid) and abs(r.pred_side_resid) >= 0.5:
-            side = f"{h if r.side_lean == 'home' else a} +{abs(r.pred_side_resid):.1f}"
+            side = picks.spread_pick(h, a, r.side_lean, r.mkt_spread, r.pred_side_resid)
         tot = ""
         if pd.notna(r.pred_total_resid) and abs(r.pred_total_resid) >= 0.5:
-            tot = f"{r.total_lean.upper()} {r.mkt_total:.1f}->{r.fair_total:.1f}"
+            tot = picks.total_pick(r.total_lean, r.mkt_total, r.fair_total)
         mv = ""
         if pd.notna(r.remaining_move) and abs(r.remaining_move) >= 0.5:
             mv = f"toward {h if r.move_lean == 'home' else a} {abs(r.remaining_move):.1f}"
@@ -322,8 +325,8 @@ def plain_view(res: pd.DataFrame) -> pd.DataFrame:
         ev = f"{max(evs)[0]:+.0f}% {max(evs)[1]}" if evs else ""
         wx = r.wx_note if getattr(r, "wx_flag", None) is True else ""
         rs = getattr(r, "rest_note", "") or ""
-        return pd.Series({"Kickoff": r.kickoff_pt, "Game": f"{a} @ {h}", "Line": line, "SIDE": side,
-                          "TOTAL": tot, "MOVE": mv, "EV": ev,
+        return pd.Series({"Kickoff": r.kickoff_pt, "Game": f"{a} @ {h}", "Home line": line, "SPREAD PICK": side,
+                          "TOTAL PICK": tot, "LINE MAY MOVE": mv, "EV": ev,
                           "NEWS?": "CHECK" if r.check_news else "", "WEATHER": wx, "REST": rs.replace("rest: ", "")})
     return res.apply(f, axis=1)
 
@@ -372,6 +375,12 @@ def run_score(args) -> int:
                 "side_lean", "pred_side_resid", "side_fair_spread",
                 "pred_total_resid", "fair_total", "total_lean", "remaining_move", "fair_home_spread",
                 "move_lean", "ev_side_pct", "ev_total_pct", "check_news", "wx_note", "wx_flag", "rest_note", "rest_flag"]].copy()
+    show.insert(2, "spread_pick", [picks.spread_pick(r.homeTeam, r.awayTeam, r.side_lean, r.mkt_spread, r.pred_side_resid)
+                                   if pd.notna(r.pred_side_resid) and abs(r.pred_side_resid) >= 0.5 else ""
+                                   for r in res.itertuples()])
+    show.insert(3, "total_pick", [picks.total_pick(r.total_lean, r.mkt_total, r.fair_total)
+                                  if pd.notna(r.pred_total_resid) and abs(r.pred_total_resid) >= 0.5 else ""
+                                  for r in res.itertuples()])
     for c in ("fair_total", "remaining_move", "fair_home_spread", "pred_total_resid"):
         show[c] = show[c].round(1)
     for c in ("pred_side_resid", "side_fair_spread"):
@@ -386,8 +395,9 @@ def run_score(args) -> int:
               f"(or run with --wide).\n")
         print(plain_view(res).to_string(index=False))
         print("\nHOW TO READ: 'Line' = home team's current spread (open in brackets); negative = favored.\n"
-              "SIDE = team the model says covers, and by how many points of edge (blank = under 0.5 pt, i.e. no lean). TOTAL = lean, market total -> model total (blank = under 0.5 pt).\n"
-              "MOVE = which way the model expects the spread to still move. EV = best uncalibrated EV (side/total).\n"
+              "SPREAD PICK = bet that team against the point spread (NOT the moneyline), at the line shown, with the model's edge in points (blank = under 0.5 pt, no lean).\n"
+              "TOTAL PICK = Over/Under the posted total; 'model' is the model's own projected total (blank = under 0.5 pt).\n"
+              "LINE MAY MOVE = which way the model expects the spread to still move. EV = best uncalibrated EV (side/total).\n"
               "WEATHER = shown only for bad conditions (wind 15+ mph, gusts 25+, rain 60%+, 25F or colder); context only.\n"
               "NEWS? = line or total moved 4+ points since the open (injury/suspension?) - skip those leans until checked.")
     print("\nev_side_pct / ev_total_pct = UNCALIBRATED expected value per 100 risked at -110 IF the model's win chance were\n"
@@ -479,9 +489,14 @@ def run_grade(args) -> int:
         print(fmt_tally("largest third by |pred|", int(bigs["win"].sum()), len(bigs), roi=True))
 
     base = log.sort_values("run_ts_utc").groupby("game_id").head(1).merge(done, on="game_id", how="inner")
-    base["total_win"] = base["game_id"].map(t.set_index("game_id")["win"])
-    base["move_agree"] = base["game_id"].map(mv.set_index("game_id")["agree"])
-    base["side_win"] = base["game_id"].map(sd.set_index("game_id")["win"])
+    # plain words instead of True/False: Win / Loss / Push for bets; Right / Wrong for the line-move call
+    tw, sw = t.set_index("game_id"), sd.set_index("game_id")
+    base["total_result"] = [picks.result_word(tw["win"].get(g), bool(tw["push"].get(g, False))) if g in tw.index else ""
+                            for g in base["game_id"]]
+    base["spread_result"] = [picks.result_word(sw["win"].get(g), bool(sw["push"].get(g, False))) if g in sw.index else ""
+                             for g in base["game_id"]]
+    base["line_move_call"] = base["game_id"].map(mv.set_index("game_id")["agree"]).map(
+        {True: "Right", False: "Wrong"}).fillna("")
     base.to_csv(out_dir / "cfb_graded.csv", index=False)
     print(f"\nper-game detail: {out_dir / 'cfb_graded.csv'}")
     print("Treat results as noise until n is in the hundreds.")
