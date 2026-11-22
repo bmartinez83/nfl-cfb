@@ -1,0 +1,18 @@
+logged games: 196 | finished and gradeable: 127 | still pending: 69
+
+TOTALS (entry = first logged total; lean over/under; borderline signal in testing):
+  all leans: 62-65  = 48.8%  (95% CI 40.3-57.4%, n=127)  ROI at -110: -6.8%
+  picks shown (edge 0.5+ pts): 35-38  = 47.9%  (95% CI 36.9-59.2%, n=73)  ROI at -110: -8.5%
+  largest third by |pred|: 23-20  = 53.5%  (95% CI 38.9-67.5%, n=43)  ROI at -110: +2.1%
+
+LINE MOVES (entry spread -> latest spread in your data; direction of the lean):
+  lean matched the move (14 games did not move): 60-53  = 53.1%  (95% CI 43.9-62.0%, n=113)
+  (50% = coin flip. 'Latest' is the last line CFBD holds, a proxy for the close.)
+
+SIDES (entry = first logged spread; NO edge found in testing, shown for the record):
+  all side leans: 64-59-4  = 52.0%  (95% CI 43.3-60.7%, n=123)  ROI at -110: -0.7%
+  side picks shown (edge 0.5+ pts): no graded games yet
+  largest third by |pred|: 18-23  = 43.9%  (95% CI 29.9-59.0%, n=41)  ROI at -110: -16.2%
+
+per-game detail: /home/runner/work/nfl-cfb/nfl-cfb/outputs/cfb_graded.csv
+Treat results as noise until n is in the hundreds.
