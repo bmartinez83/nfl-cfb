@@ -31,7 +31,7 @@ jobs:
           python src/cfb_pull.py --start 2019
           python src/cfb_pull.py --start 2026 --refresh
           python -W ignore src/cfb_weekly.py --grade | tee outputs/grade_report_cfb.txt
-          python -W ignore src/nfl_weekly.py --refresh --grade 2>&1 | grep -v "^season\|^team_week\|^games.csv\|^Raw files" | tee outputs/grade_report_nfl.txt
+          python -W ignore src/nfl_weekly.py --refresh --grade 2>&1 | grep -v "^ *season \|^team_week\|^games.csv\|^Raw files" | tee outputs/grade_report_nfl.txt
           # combined file is still read by the HTML report
           { echo "=== CFB ==="; cat outputs/grade_report_cfb.txt; echo; echo "=== NFL ==="; cat outputs/grade_report_nfl.txt; } > outputs/grade_report.txt
       - run: |
