@@ -1,21 +1,13 @@
-  season 2019: 256 games, 256 with final scores
-  season 2020: 256 games, 256 with final scores
-  season 2021: 272 games, 272 with final scores
-  season 2022: 271 games, 271 with final scores
-  season 2023: 272 games, 272 with final scores
-  season 2024: 272 games, 272 with final scores
-  season 2025: 272 games, 272 with final scores
-  season 2026: 272 games, 151 with final scores
-games logged: 42 | finished and gradeable: 15 | pending: 27
+games logged: 42 | finished and gradeable: 22 | pending: 20
 
-SPREAD leans (ATS at first logged line): 9-6-0  win% 60.0 (95% CI 35.7-80.2, breakeven 52.4)  ROI at -110 +14.5%
-TOTAL leans (at first logged line): 9-6-0  win% 60.0 (95% CI 35.7-80.2, breakeven 52.4)  ROI at -110 +14.5%
-CLV spread: avg -0.20 pts vs last logged line | line moved in your favor 3, against 5, unchanged 7
-CLV total: avg +0.00 pts vs last logged line | line moved in your favor 3, against 4, unchanged 8
+SPREAD leans (ATS at first logged line): 11-11-0  win% 50.0 (95% CI 30.7-69.3, breakeven 52.4)  ROI at -110 -4.5%
+TOTAL leans (at first logged line): 11-11-0  win% 50.0 (95% CI 30.7-69.3, breakeven 52.4)  ROI at -110 -4.5%
+CLV spread: avg -0.30 pts vs last logged line | line moved in your favor 4, against 8, unchanged 10
+CLV total: avg -0.36 pts vs last logged line | line moved in your favor 4, against 9, unchanged 9
 
 (The CLV above uses our own LAST logged line as the close - a weak proxy.)
 
 CLV vs NOVIG close (same-source: our entry time -> last Novig snapshot before kickoff)
   Novig CLV spread: avg +0.20 pts over 13 games | in your favor 8, against 5, unchanged 0
   Novig CLV total: avg -0.51 pts over 13 games | in your favor 5, against 7, unchanged 1
-  (avg window 77h between entry and close; positive = the market moved toward our lean)
+  (avg window 114h between entry and close; positive = the market moved toward our lean)
