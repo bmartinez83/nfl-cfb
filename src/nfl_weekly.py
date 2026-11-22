@@ -40,7 +40,7 @@ ET = ZoneInfo("America/New_York")
 LOG_COLS = ["run_ts_utc", "season", "week", "game_id", "gameday", "gametime", "away", "home",
             "spread_line", "total_line", "home_ml", "away_ml",
             "model_margin", "model_total", "model_prob_home",
-            "gap_spread", "gap_total", "spread_lean", "total_lean", "inj_hold", "inj_note", "wx_note", "rest_note", "qb_adj", "qb_hold", "qb_note"]
+            "gap_spread", "gap_total", "spread_lean", "total_lean", "inj_hold", "inj_note", "wx_note", "rest_note", "qb_adj", "qb_hold", "qb_note", "sit_adj", "sit_note"]
 LINE_COLS = ["spread_line", "total_line", "home_ml", "away_ml", "inj_note", "qb_note"]
 
 
@@ -117,6 +117,7 @@ def run_score(args) -> None:
     print(f"model trained on {bundle['n_train']} games through {bundle['trained_through']}")
 
     pred = _apply_qb(pred, played, bundle["margin_sd"])
+    pred = _apply_situational(pred, bundle["margin_sd"])
     pred["gap_spread"] = pred["model_margin"] - pred["spread_line"]
     pred["gap_total"] = pred["model_total"] - pred["total_line"]
     pred["spread_lean"] = np.where(pred["gap_spread"] > 0, "home", "away")
@@ -155,6 +156,7 @@ def run_score(args) -> None:
         "inj_hold": pred["inj_hold"], "inj_note": pred["inj_note"], "wx_note": pred["wx_note"],
         "rest_note": pred["rest_note"],
         "qb_adj": pred["qb_adj"], "qb_hold": pred["qb_hold"], "qb_note": pred["qb_note"],
+        "sit_adj": pred["sit_adj"].round(2), "sit_note": pred["sit_note"],
     })[LOG_COLS]
 
     log_path = out / "nfl_log.csv"
@@ -271,6 +273,28 @@ def _novig_clv(fin: pd.DataFrame, out: Path) -> None:
         print(f"  Novig CLV {name}: avg {x.mean():+.2f} pts over {len(x)} games | in your favor "
               f"{int((x > 0).sum())}, against {int((x < 0).sum())}, unchanged {int((x == 0).sum())}")
     print(f"  (avg window {d['hrs'].mean():.0f}h between entry and close; positive = the market moved toward our lean)")
+
+
+def _apply_situational(pred: pd.DataFrame, margin_sd: float) -> pd.DataFrame:
+    """Nudge model_margin by the 4th-down / pass-rush matchup (see situational.py). Skips (no change) on any failure."""
+    from math import erf, sqrt
+    pred = pred.copy()
+    pred["sit_adj"], pred["sit_note"] = 0.0, ""
+    try:
+        import situational
+        season = int(pred["season"].iloc[0])
+        tg = situational.team_games([season - 1, season], ROOT / "data" / "raw")
+        pred = situational.adjust(pred, tg)
+        phi = lambda m: 0.5 * (1 + np.vectorize(erf)(m / (margin_sd * sqrt(2))))  # noqa: E731
+        old = pred["model_margin"].astype(float)
+        pred["model_margin"] = old + pred["sit_adj"]
+        pred["model_prob_home"] = np.clip(pred["model_prob_home"] + phi(pred["model_margin"]) - phi(old), 0.01, 0.99)
+        print(f"Situational adjustment applied to {int((pred['sit_adj'].abs() >= 0.05).sum())} game(s); "
+              f"max |adj| {pred['sit_adj'].abs().max():.2f} pts")
+    except Exception as e:  # noqa: BLE001
+        print(f"WARNING: situational adjustment skipped ({e.__class__.__name__}: {e})")
+        pred["sit_adj"], pred["sit_note"] = 0.0, "situational data unavailable - no adjustment"
+    return pred
 
 
 def _apply_qb(pred: pd.DataFrame, played: pd.DataFrame, margin_sd: float) -> pd.DataFrame:
