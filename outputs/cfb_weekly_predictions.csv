@@ -1,42 +1,70 @@
 kickoff_pt,game,spread_pick,total_pick,mkt_spread,sp_open,mkt_total,ou_open,n_books,side_lean,pred_side_resid,side_fair_spread,pred_total_resid,fair_total,total_lean,remaining_move,fair_home_spread,move_lean,ev_side_pct,ev_total_pct,check_news,wx_note,wx_flag,rest_note,rest_flag
-Sat 11/21 01:00 PM,Georgia State @ Marshall,,,-3.0,1.25,56.5,57.75,2,home,0.07,-3.07,0.3,56.8,over,-4.2,1.2,away,-4.2,-2.9,CHECK NEWS,"wind 5 mph (gusts 10), 62F",False,,False
-Sat 11/21 01:00 PM,South Alabama @ Southern Miss,,,5.0,5.5,65.25,63.0,2,home,0.1,4.9,-0.4,64.9,under,0.1,4.9,home,-4.0,-2.8,,"wind 6 mph (gusts 11), 72F",False,,False
-Sat 11/21 01:00 PM,Georgia Southern @ Troy,,Over 47.5 · model 48.4,7.75,8.25,47.5,48.25,2,home,0.04,7.71,0.9,48.4,over,-0.9,8.6,away,-4.3,-0.3,,"wind 10 mph (gusts 21), 61F",False,,False
-Sat 11/21 01:00 PM,Northern Illinois @ North Dakota State,,Over 46.5 · model 48.1,-25.25,-25.75,46.5,47.0,2,away,-0.03,-25.22,1.6,48.1,over,0.9,-26.1,home,-4.4,3.0,,dome - no weather effect,False,,False
-Sat 11/21 03:00 PM,Washington State @ Texas State,,Under 61.5 · model 61.0,-13.5,-12.5,61.5,59.0,2,away,-0.16,-13.34,-0.5,61.0,under,-1.5,-12.0,away,-3.8,-2.1,,"wind 4 mph (gusts 11), 67F",False,,False
-Sat 11/21 03:15 PM,Maryland @ USC,,,-17.5,-16.75,57.5,57.0,2,away,-0.05,-17.45,-0.3,57.2,under,-0.5,-17.0,away,-4.3,-2.9,,"wind 3 mph (gusts 11), 65F",False,,False
-Sat 11/21 04:00 PM,Arizona @ Kansas State,,,10.0,9.75,53.5,51.5,2,home,0.06,9.94,-0.1,53.4,under,0.4,9.6,home,-4.2,-3.9,,"wind 12 mph (gusts 28), 51F, rain 86%",True,,False
-Sat 11/21 04:00 PM,Arkansas State @ Louisiana Tech,,,-14.75,-15.5,54.75,51.75,2,away,-0.07,-14.68,0.4,55.2,over,0.1,-14.8,home,-4.2,-2.6,,"wind 6 mph (gusts 15), 66F",False,,False
-Sat 11/21 04:00 PM,Virginia Tech @ Miami,,Under 61.25 · model 60.7,-20.5,-18.5,61.25,58.75,2,away,-0.05,-20.45,-0.5,60.7,under,-2.0,-18.5,away,-4.3,-2.1,,"wind 6 mph (gusts 22), 73F",False,,False
-Sat 11/21 04:00 PM,UNLV @ San José State,,Over 47.75 · model 48.5,6.5,4.5,47.75,48.0,2,home,0.13,6.37,0.8,48.5,over,2.4,4.1,home,-3.9,-0.8,,"wind 6 mph (gusts 13), 50F",False,,False
-Sat 11/21 04:30 PM,Kentucky @ Missouri,,,-4.75,-6.0,49.5,49.0,2,away,-0.13,-4.62,0.3,49.8,over,0.7,-5.4,home,-3.9,-3.1,,"wind 10 mph (gusts 26), 64F",True,,False
-Sat 11/21 04:30 PM,Stanford @ California,,Over 55.25 · model 55.8,2.75,2.0,55.25,55.5,2,home,0.09,2.66,0.6,55.8,over,1.7,1.0,home,-4.1,-1.8,,"wind 8 mph (gusts 22), 50F, rain 42%",False,,False
-Sat 11/21 04:30 PM,Colorado State @ Fresno State,,,-20.5,-20.5,66.75,62.75,2,home,0.1,-20.6,-0.2,66.5,under,1.1,-21.6,home,-4.1,-3.4,CHECK NEWS,"wind 3 mph, 51F",False,,False
-Sat 11/21 04:30 PM,SMU @ Notre Dame,,Under 55.5 · model 54.1,-20.5,-19.0,55.5,56.75,2,home,0.04,-20.54,-1.4,54.1,under,-1.1,-19.4,away,-4.3,2.3,,"wind 6 mph (gusts 19), 51F",False,,False
-Sat 11/21 04:30 PM,Pittsburgh @ Louisville,,,-11.75,-13.0,50.5,51.0,2,away,-0.11,-11.64,0.1,50.6,over,0.9,-12.6,home,-4.0,-3.9,,"wind 5 mph (gusts 11), 54F",False,,False
-Sat 11/21 04:30 PM,Georgia @ South Carolina,,,14.5,13.5,51.5,50.75,2,away,-0.0,14.5,-0.1,51.4,under,0.2,14.3,home,-4.5,-4.2,,"wind 11 mph (gusts 21), 58F, rain 47%",False,,False
-Sat 11/21 05:00 PM,UTSA @ UAB,,,4.0,6.75,49.5,52.75,2,home,0.09,3.91,0.5,50.0,over,-1.8,5.8,away,-4.1,-2.2,,"wind 7 mph (gusts 25), 61F",True,,False
-Sat 11/21 06:00 PM,Utah @ TCU,,,8.5,6.0,46.5,45.5,2,home,0.09,8.41,0.1,46.6,over,2.7,5.8,home,-4.1,-4.2,,"wind 7 mph (gusts 19), 66F",False,,False
-Sat 11/21 06:30 PM,San Diego State @ Boise State,,,-20.5,-17.75,60.75,62.5,2,away,-0.19,-20.31,-0.3,60.5,under,-3.0,-17.5,away,-3.6,-3.2,,"wind 8 mph (gusts 14), 38F",False,,False
-Sat 11/21 07:15 PM,Oklahoma State @ Arizona State,,,2.5,3.5,59.5,62.25,2,home,0.05,2.45,0.2,59.7,over,-1.6,4.1,away,-4.3,-3.8,,"wind 3 mph, 52F",False,,False
-Sat 11/21 07:30 PM,Utah State @ Oregon State,,Over 51.25 · model 51.9,-7.0,-9.25,51.25,50.5,2,away,-0.08,-6.92,0.7,51.9,over,2.8,-9.8,home,-4.2,-1.4,,"wind 6 mph (gusts 18), 41F, rain 37%",False,,False
-Sat 11/21 07:30 PM,Hawai'i @ Nevada,,Over 40.5 · model 42.1,-7.0,-3.25,40.5,41.25,2,away,-0.03,-6.97,1.6,42.1,over,-3.5,-3.5,away,-4.4,3.2,,"wind 5 mph (gusts 14), 35F",False,,False
-Thu 11/26 05:00 PM,TCU @ Texas Tech,,,-10.5,-16.5,47.5,55.5,1,away,-0.08,-10.42,0.1,47.6,over,5.3,-15.8,home,-4.2,-4.2,CHECK NEWS,"wind 9 mph (gusts 19), 48F",False,"rest: TCU 5d @ Texas Tech 5d (TCU short week, Texas Tech short week)",True
-Fri 11/27 09:00 AM,Mississippi State @ Ole Miss,,Under 57.5 · model 56.9,-14.5,-14.5,57.5,56.5,1,away,-0.05,-14.45,-0.6,56.9,under,0.1,-14.6,home,-4.3,-1.5,,"wind 8 mph, 51F",False,,False
-Fri 11/27 09:00 AM,Nebraska @ Iowa,,Over 38.5 · model 39.4,-6.5,-6.5,38.5,38.5,1,home,0.09,-6.59,0.9,39.4,over,0.6,-7.1,home,-4.1,-0.1,,"wind 12 mph (gusts 18), 38F",False,,False
-Fri 11/27 12:30 PM,Florida @ Florida State,,Under 52.5 · model 52.0,4.5,4.5,52.5,52.5,1,away,-0.07,4.57,-0.5,52.0,under,0.5,4.0,home,-4.2,-2.1,,"wind 5 mph, 63F",False,,False
-Fri 11/27 04:30 PM,Texas @ Texas A&M,,Over 41.5 · model 42.1,7.5,2.5,41.5,53.5,1,home,0.05,7.45,0.6,42.1,over,4.6,2.9,home,-4.3,-1.5,CHECK NEWS,"wind 6 mph, 55F",False,,False
-Fri 11/27 09:00 PM,Duke @ Wake Forest,,,-10.5,-10.5,52.5,52.5,1,away,-0.06,-10.44,-0.1,52.4,under,0.4,-10.9,home,-4.2,-4.3,,"wind 9 mph (gusts 24), 45F",False,,False
-Fri 11/27 09:00 PM,Tennessee @ Vanderbilt,,Under 57.5 · model 56.8,3.0,3.0,57.5,57.5,1,away,-0.14,3.14,-0.7,56.8,under,-1.2,4.2,away,-3.9,-1.2,,"wind 4 mph (gusts 10), 43F",False,,False
-Fri 11/27 09:00 PM,Louisville @ Kentucky,,Under 54.5 · model 53.7,-1.5,-1.5,54.5,54.5,1,home,0.16,-1.66,-0.8,53.7,under,0.6,-2.1,home,-3.7,-0.8,,weather unavailable (URLError),,,False
-Fri 11/27 09:00 PM,Auburn @ Alabama,,,-15.5,-10.0,50.5,53.5,1,away,-0.02,-15.48,0.2,50.7,over,-5.4,-10.1,away,-4.5,-3.4,CHECK NEWS,"wind 3 mph, 43F",False,,False
-Fri 11/27 09:00 PM,Washington @ Oregon,,,-12.5,-15.5,48.5,54.5,1,away,-0.04,-12.46,-0.0,48.5,under,2.8,-15.3,home,-4.3,-4.4,CHECK NEWS,"wind 3 mph, 49F, rain 43%",False,,False
-Fri 11/27 09:00 PM,South Carolina @ Clemson,,,-3.0,-3.0,53.5,53.5,1,home,0.11,-3.11,-0.3,53.2,under,0.5,-3.5,home,-4.0,-3.2,,"wind 3 mph, 41F",False,,False
-Sat 11/28 09:00 AM,NC State @ North Carolina,,,1.5,1.5,55.5,55.5,1,home,0.04,1.46,0.2,55.7,over,0.6,0.9,home,-4.4,-3.5,,"wind 6 mph, 56F",False,,False
-Sat 11/28 09:00 AM,Notre Dame @ Syracuse,,Under 54.5 · model 53.7,20.5,20.5,54.5,54.5,1,home,0.14,20.36,-0.8,53.7,under,1.1,19.4,home,-3.8,-0.7,,dome - no weather effect,False,,False
-Sat 11/28 09:00 AM,Michigan @ Ohio State,,Over 41.5 · model 42.0,-12.5,-13.5,41.5,46.5,1,away,-0.13,-12.37,0.5,42.0,over,0.7,-13.2,home,-3.9,-2.0,CHECK NEWS,"wind 7 mph, 46F",False,,False
-Sat 11/28 09:30 AM,Illinois @ Northwestern,,,3.5,3.5,52.5,52.5,1,home,0.01,3.49,-0.1,52.4,under,0.1,3.4,home,-4.5,-4.2,,"wind 10 mph (gusts 18), 42F",False,,False
-Sat 11/28 12:00 PM,Virginia @ Virginia Tech,,,-1.5,-1.5,53.5,53.5,1,away,-0.1,-1.4,0.3,53.8,over,-0.3,-1.2,away,-4.0,-3.1,,"wind 5 mph (gusts 11), 41F",False,,False
-Sat 11/28 12:30 PM,USC @ UCLA,,,-2.5,10.5,52.5,55.5,1,home,0.11,-2.61,0.1,52.6,over,-12.1,9.6,away,-4.0,-4.1,CHECK NEWS,"wind 5 mph, 74F",False,,False
-Sat 11/28 01:15 PM,Oklahoma @ Missouri,,Over 42.5 · model 43.3,-1.5,-1.5,42.5,42.5,1,away,-0.15,-1.35,0.8,43.3,over,-0.5,-1.0,away,-3.8,-0.8,,"wind 10 mph (gusts 26), 51F",True,,False
-Sat 11/28 06:00 PM,Arizona State @ Arizona,,,-4.5,-4.5,52.5,52.5,1,away,-0.13,-4.37,0.1,52.6,over,-0.2,-4.3,away,-3.9,-4.2,,"wind 3 mph, 64F",False,,False
+Tue 11/24 04:00 PM,Miami (OH) @ Western Michigan,,Over 46.5 · model 47.6,-7.0,-7.5,46.5,46.5,1,no lean,0.09,-7.09,1.1,47.6,over,0.9,-7.9,home,-4.1,0.9,,"wind 6 mph (gusts 13), 32F",False,,False
+Tue 11/24 04:00 PM,Kent State @ Eastern Michigan,,Over 45.5 · model 47.2,-5.5,-6.5,45.5,46.5,1,no lean,0.06,-5.56,1.7,47.2,over,1.5,-7.0,home,-4.3,3.6,,"wind 4 mph, 31F",False,,False
+Thu 11/26 05:00 PM,TCU @ Texas Tech,,,-11.5,-16.5,46.5,55.5,1,no lean,-0.1,-11.4,0.1,46.6,no lean,4.3,-15.8,home,-4.1,-3.9,CHECK NEWS,"wind 7 mph, 48F",False,"rest: TCU 5d @ Texas Tech 5d (TCU short week, Texas Tech short week)",True
+Fri 11/27 09:00 AM,Nebraska @ Iowa,,Over 39.5 · model 40.3,-5.5,-6.5,39.5,38.5,1,no lean,0.1,-5.6,0.8,40.3,over,1.5,-7.0,home,-4.1,-0.7,,"wind 8 mph (gusts 14), 45F",False,,False
+Fri 11/27 09:00 AM,Tulsa @ UTSA,,,-1.5,-2.5,60.5,58.5,1,no lean,0.02,-1.52,-0.1,60.4,no lean,0.7,-2.2,home,-4.5,-3.9,,dome - no weather effect,False,,False
+Fri 11/27 09:00 AM,Mississippi State @ Ole Miss,,Under 56.5 · model 55.9,-19.5,-14.5,56.5,56.5,1,no lean,-0.04,-19.46,-0.6,55.9,under,-4.9,-14.6,away,-4.3,-1.6,CHECK NEWS,"wind 6 mph, 51F",False,,False
+Fri 11/27 09:00 AM,Toledo @ Ohio,,Over 49.5 · model 50.2,3.5,4.5,49.5,48.5,1,no lean,0.03,3.47,0.7,50.2,over,-0.9,4.4,away,-4.4,-1.3,,"wind 12 mph (gusts 26), 42F",True,rest: Toledo 7d @ Ohio 10d (Ohio off bye),True
+Fri 11/27 09:00 AM,Buffalo @ Akron,,Over 50.5 · model 51.6,8.5,10.0,50.5,49.5,1,no lean,0.03,8.47,1.1,51.6,over,-1.6,10.1,away,-4.4,0.8,,"wind 15 mph (gusts 32), 39F, rain 37%",True,,False
+Fri 11/27 12:00 PM,App State @ South Alabama,,,-3.0,-2.5,56.5,55.5,1,no lean,-0.14,-2.86,0.3,56.8,no lean,-1.6,-1.4,away,-3.9,-3.1,,"wind 5 mph (gusts 11), 54F",False,,False
+Fri 11/27 12:30 PM,Temple @ Memphis,,Under 64.5 · model 63.9,-17.5,-17.5,64.5,64.5,1,no lean,-0.08,-17.42,-0.6,63.9,under,0.5,-18.0,home,-4.1,-1.5,,"wind 4 mph, 52F",False,,False
+Fri 11/27 12:30 PM,Florida @ Florida State,,,6.0,4.5,52.5,52.5,1,no lean,-0.05,6.05,-0.5,52.0,no lean,2.0,4.0,home,-4.3,-2.2,,"wind 5 mph (gusts 13), 57F",False,,False
+Fri 11/27 12:30 PM,North Dakota State @ San José State,,Over 39.5 · model 40.6,12.5,11.5,39.5,39.5,1,no lean,0.07,12.43,1.1,40.6,over,0.7,11.8,home,-4.2,0.6,,"wind 5 mph, 63F",False,,False
+Fri 11/27 01:30 PM,Air Force @ New Mexico,,Over 41.5 · model 42.5,-6.5,-7.0,41.5,41.5,1,no lean,-0.07,-6.43,1.0,42.5,over,-0.1,-6.4,no lean,-4.2,0.3,,"wind 11 mph, 57F",False,,False
+Fri 11/27 04:30 PM,Minnesota @ Wisconsin,,Over 36.5 · model 38.5,-7.0,-6.0,36.5,38.5,1,no lean,-0.03,-6.97,2.0,38.5,over,-0.8,-6.2,away,-4.4,4.8,,"wind 8 mph (gusts 24), 36F",False,,False
+Fri 11/27 04:30 PM,Texas @ Texas A&M,,Over 38.5 · model 39.3,11.5,2.5,38.5,53.5,1,no lean,0.08,11.42,0.8,39.3,over,8.5,3.0,home,-4.2,-0.8,CHECK NEWS,"wind 6 mph, 51F",False,,False
+Fri 11/27 06:00 PM,West Virginia @ Utah,,Under 69.5 · model 68.3,-20.5,-20.5,69.5,68.5,1,no lean,-0.02,-20.48,-1.2,68.3,under,0.4,-20.9,no lean,-4.5,1.2,,"wind 4 mph, 46F",False,,False
+Sat 11/28 09:00 AM,Navy @ Charlotte,,,15.5,16.5,56.5,53.5,1,no lean,0.14,15.36,0.5,57.0,no lean,-1.6,17.1,away,-3.8,-2.2,,"wind 4 mph, 56F",False,,False
+Sat 11/28 09:00 AM,Louisville @ Kentucky,,Under 55.5 · model 54.7,2.5,-1.5,55.5,54.5,1,no lean,0.16,2.34,-0.8,54.7,under,4.4,-1.9,home,-3.7,-0.5,CHECK NEWS,"wind 15 mph (gusts 22), 52F",False,,False
+Sat 11/28 09:00 AM,Boston College @ Miami,,,-25.5,-26.5,53.5,53.5,1,no lean,-0.15,-25.35,0.1,53.6,no lean,0.5,-26.0,no lean,-3.8,-4.3,,"wind 6 mph, 71F",False,,False
+Sat 11/28 09:00 AM,Louisiana Tech @ Georgia Southern,,,-2.5,-1.5,52.5,52.5,1,no lean,0.02,-2.52,0.5,53.0,no lean,-0.7,-1.8,away,-4.5,-2.3,,"wind 7 mph, 61F",False,,False
+Sat 11/28 09:00 AM,NC State @ North Carolina,,,-5.5,1.5,55.5,55.5,1,no lean,0.05,-5.55,0.2,55.7,no lean,-6.3,0.8,away,-4.3,-3.5,CHECK NEWS,"wind 5 mph (gusts 11), 57F",False,,False
+Sat 11/28 09:00 AM,Notre Dame @ Syracuse,,Under 53.5 · model 52.7,26.5,20.5,53.5,54.5,1,no lean,0.16,26.34,-0.8,52.7,under,6.9,19.6,home,-3.8,-0.6,CHECK NEWS,dome - no weather effect,False,,False
+Sat 11/28 09:00 AM,UConn @ Wyoming,,,3.5,2.5,48.5,49.5,1,no lean,0.22,3.28,-0.0,48.5,no lean,2.4,1.1,home,-3.4,-4.5,,"wind 15 mph (gusts 32), 37F",True,,False
+Sat 11/28 09:00 AM,Central Michigan @ Ball State,,Over 46.5 · model 48.0,5.5,6.5,46.5,46.5,1,no lean,-0.08,5.58,1.5,48.0,over,-1.4,6.9,away,-4.1,2.7,,"wind 17 mph (gusts 34), 46F",True,"rest: Central Michigan 10d @ Ball State 11d (Central Michigan off bye, Ball State off bye)",True
+Sat 11/28 09:00 AM,Michigan @ Ohio State,,Over 38.5 · model 39.2,-10.5,-13.5,38.5,46.5,1,no lean,-0.14,-10.36,0.7,39.2,over,2.7,-13.2,home,-3.8,-1.3,CHECK NEWS,"wind 12 mph (gusts 25), 50F",False,,False
+Sat 11/28 09:30 AM,Illinois @ Northwestern,,,-3.0,3.5,49.5,52.5,1,no lean,0.01,-3.01,0.2,49.7,no lean,-6.4,3.4,away,-4.5,-3.8,CHECK NEWS,"wind 13 mph (gusts 26), 50F",True,,False
+Sat 11/28 09:45 AM,LSU @ Arkansas,,,13.5,13.5,47.5,47.5,1,no lean,0.03,13.47,0.3,47.8,no lean,-0.5,14.0,no lean,-4.4,-3.1,,"wind 12 mph (gusts 22), 55F",False,,False
+Sat 11/28 10:00 AM,Florida Atlantic @ East Carolina,,,-2.5,-2.5,55.5,55.5,1,no lean,0.14,-2.64,-0.1,55.4,no lean,-0.1,-2.4,no lean,-3.9,-4.3,,"wind 5 mph, 58F",False,,False
+Sat 11/28 10:00 AM,Kennesaw State @ Western Kentucky,,,1.5,1.5,54.5,53.5,1,no lean,-0.06,1.56,0.2,54.7,no lean,-0.4,1.9,no lean,-4.3,-3.4,,"wind 12 mph (gusts 22), 57F",False,,False
+Sat 11/28 10:00 AM,Marshall @ UL Monroe,,Over 50.5 · model 51.3,4.5,4.0,50.5,49.5,1,no lean,0.03,4.47,0.8,51.3,over,0.7,3.8,home,-4.4,-0.5,,"wind 10 mph (gusts 17), 67F",False,,False
+Sat 11/28 10:00 AM,Southern Miss @ Old Dominion,,Over 50.5 · model 51.2,-5.5,-4.5,50.5,50.5,1,no lean,0.07,-5.57,0.7,51.2,over,-1.1,-4.4,away,-4.2,-1.3,,"wind 4 mph (gusts 10), 59F",False,,False
+Sat 11/28 11:00 AM,UCF @ Colorado,,Over 51.5 · model 52.3,-2.5,-1.5,51.5,50.5,1,no lean,-0.06,-2.44,0.8,52.3,over,-1.6,-0.9,away,-4.3,-0.9,,"wind 8 mph, 49F",False,,False
+Sat 11/28 11:00 AM,New Mexico State @ Middle Tennessee,,Over 52.5 · model 53.5,-3.0,-3.5,52.5,52.5,1,no lean,-0.04,-2.96,1.0,53.5,over,-0.2,-2.8,no lean,-4.4,0.3,,"wind 11 mph (gusts 19), 57F",False,,False
+Sat 11/28 11:00 AM,Sam Houston @ Florida International,,Over 40.5 · model 42.3,-11.5,-10.5,40.5,39.5,1,no lean,-0.0,-11.5,1.8,42.3,over,-1.0,-10.5,away,-4.5,4.2,,"wind 6 mph, 73F",False,,False
+Sat 11/28 11:00 AM,Liberty @ Missouri State,,Over 51.5 · model 52.1,14.5,14.5,51.5,51.5,1,no lean,0.01,14.49,0.6,52.1,over,-1.6,16.1,away,-4.5,-1.7,,"wind 9 mph (gusts 15), 57F",False,,False
+Sat 11/28 11:00 AM,Coastal Carolina @ James Madison,,,-15.5,-13.5,55.5,55.5,1,no lean,-0.03,-15.47,0.1,55.6,no lean,-2.0,-13.5,away,-4.4,-4.2,,"wind 7 mph, 52F",False,rest: Coastal Carolina 7d @ James Madison 14d (James Madison off bye),True
+Sat 11/28 11:00 AM,Louisiana @ Georgia State,,,6.0,3.0,56.5,56.5,1,no lean,-0.06,6.06,0.5,57.0,no lean,2.8,3.2,home,-4.2,-2.2,,"wind 5 mph, 60F",False,,False
+Sat 11/28 11:00 AM,Kansas State @ Iowa State,,,-4.5,-5.5,54.5,54.5,1,no lean,-0.05,-4.45,-0.0,54.5,no lean,0.1,-4.6,no lean,-4.3,-4.5,,"wind 16 mph (gusts 25), 48F",True,,False
+Sat 11/28 11:00 AM,Army @ Rice,,Over 48.5 · model 49.3,6.5,7.5,48.5,50.5,1,no lean,0.02,6.48,0.8,49.3,over,-0.8,7.3,away,-4.5,-0.5,,"wind 8 mph (gusts 15), 71F",False,,False
+Sat 11/28 12:00 PM,South Carolina @ Clemson,,Over 39.5 · model 40.0,4.0,-3.0,39.5,53.5,1,no lean,0.11,3.89,0.5,40.0,over,7.5,-3.5,home,-4.0,-2.0,CHECK NEWS,"wind 3 mph, 54F",False,,False
+Sat 11/28 12:00 PM,Troy @ Arkansas State,,Over 46.5 · model 47.6,-3.5,-3.5,46.5,46.5,1,no lean,-0.01,-3.49,1.1,47.6,over,0.3,-3.8,no lean,-4.5,0.6,,"wind 11 mph (gusts 21), 61F",False,,False
+Sat 11/28 12:00 PM,Virginia @ Virginia Tech,,,-3.5,-1.5,52.5,53.5,1,no lean,-0.09,-3.41,0.4,52.9,no lean,-2.3,-1.2,away,-4.1,-2.8,,"wind 3 mph, 47F",False,,False
+Sat 11/28 12:30 PM,UTEP @ Northern Illinois,,Over 48.5 · model 50.2,-4.0,-4.5,48.5,49.5,1,no lean,0.02,-4.02,1.7,50.2,over,0.7,-4.7,home,-4.5,3.4,,"wind 16 mph (gusts 31), 51F",True,,False
+Sat 11/28 12:30 PM,Georgia Tech @ Georgia,,Under 55.5 · model 54.2,-35.5,-35.5,55.5,55.5,1,no lean,0.02,-35.52,-1.3,54.2,under,1.2,-36.7,home,-4.4,1.5,,"wind 4 mph, 58F",False,,False
+Sat 11/28 12:30 PM,Cincinnati @ BYU,,,-14.0,-12.5,56.5,56.5,1,no lean,0.09,-14.09,-0.4,56.1,no lean,-1.1,-12.9,away,-4.1,-2.5,,"wind 2 mph, 49F",False,,False
+Sat 11/28 12:30 PM,Tulane @ South Florida,,,-7.0,-8.5,43.5,45.5,1,no lean,0.12,-7.12,0.5,44.0,no lean,2.6,-9.6,home,-3.9,-2.2,,"wind 3 mph, 62F",False,,False
+Sat 11/28 12:30 PM,SMU @ Stanford,,,9.5,10.0,60.5,60.5,1,no lean,0.06,9.44,-0.2,60.3,no lean,-0.9,10.4,away,-4.3,-3.5,,"wind 3 mph, 68F, rain 51%",False,,False
+Sat 11/28 12:30 PM,Jacksonville State @ Delaware,,,-2.5,-1.5,57.5,57.5,1,no lean,-0.07,-2.43,0.1,57.6,no lean,-1.6,-0.9,away,-4.2,-4.0,,"wind 5 mph (gusts 13), 53F",False,,False
+Sat 11/28 12:30 PM,Penn State @ Maryland,,,7.5,7.5,49.5,49.5,1,no lean,0.04,7.46,0.4,49.9,no lean,-0.1,7.6,no lean,-4.4,-2.6,,"wind 4 mph, 54F",False,,False
+Sat 11/28 12:30 PM,USC @ UCLA,,,7.0,10.5,45.5,55.5,1,no lean,0.12,6.88,0.5,46.0,no lean,-2.6,9.6,away,-3.9,-2.3,CHECK NEWS,"wind 5 mph, 73F",False,,False
+Sat 11/28 12:30 PM,Massachusetts @ Bowling Green,,Over 43.5 · model 45.7,-1.5,-1.5,43.5,43.5,1,no lean,-0.01,-1.49,2.2,45.7,over,-0.7,-0.8,away,-4.5,6.1,,"wind 16 mph (gusts 32), 48F",True,rest: Massachusetts 10d @ Bowling Green 8d (Massachusetts off bye),True
+Sat 11/28 12:30 PM,Duke @ Wake Forest,,,-14.0,-10.5,56.5,52.5,1,no lean,-0.06,-13.94,-0.3,56.2,no lean,-3.1,-10.9,away,-4.2,-3.0,CHECK NEWS,"wind 6 mph (gusts 14), 52F",False,,False
+Sat 11/28 01:00 PM,UAB @ North Texas,,,-4.5,-4.5,48.5,48.5,1,no lean,-0.22,-4.28,0.1,48.6,no lean,-1.5,-3.0,away,-3.4,-4.1,,"wind 11 mph (gusts 18), 66F",False,,False
+Sat 11/28 01:15 PM,Oklahoma @ Missouri,,Over 41.5 · model 42.3,-1.5,-1.5,41.5,42.5,1,no lean,-0.17,-1.33,0.8,42.3,over,-0.8,-0.7,away,-3.7,-0.7,,"wind 8 mph (gusts 19), 53F",False,,False
+Sat 11/28 01:15 PM,Michigan State @ Rutgers,,Over 48.5 · model 49.1,3.0,3.5,48.5,48.5,1,no lean,-0.2,3.2,0.6,49.1,over,-1.6,4.6,away,-3.6,-1.6,,"wind 5 mph (gusts 12), 53F",False,,False
+Sat 11/28 03:00 PM,Boise State @ Colorado State,,Under 75.5 · model 73.6,21.0,21.0,75.5,75.5,1,no lean,0.03,20.97,-1.9,73.6,under,-0.2,21.2,no lean,-4.4,4.5,,"wind 3 mph, 41F",False,,False
+Sat 11/28 03:15 PM,Kansas @ Oklahoma State,,,-6.5,-6.5,66.5,67.5,1,no lean,0.04,-6.54,-0.4,66.1,no lean,0.6,-7.1,home,-4.3,-2.7,,"wind 2 mph, 53F",False,,False
+Sat 11/28 03:30 PM,San Diego State @ Washington State,,,3.0,3.0,46.5,46.5,1,no lean,0.03,2.97,0.3,46.8,no lean,1.3,1.7,home,-4.4,-3.1,,"wind 7 mph, 39F, rain 32%",False,,False
+Sat 11/28 04:00 PM,Purdue @ Indiana,,,-22.5,-22.5,52.5,52.5,1,no lean,-0.07,-22.43,-0.0,52.5,no lean,-0.5,-22.0,no lean,-4.2,-4.3,,"wind 9 mph (gusts 29), 47F",True,,False
+Sat 11/28 04:00 PM,Tennessee @ Vanderbilt,,,12.5,3.0,43.5,57.5,1,no lean,-0.13,12.63,0.1,43.6,no lean,8.2,4.3,home,-3.9,-3.9,CHECK NEWS,"wind 8 mph (gusts 27), 53F",True,,False
+Sat 11/28 04:30 PM,Washington @ Oregon,,,-13.5,-15.5,49.5,54.5,1,no lean,-0.04,-13.46,-0.1,49.4,no lean,1.7,-15.2,home,-4.3,-3.9,CHECK NEWS,"wind 2 mph, 48F, rain 44%",False,,False
+Sat 11/28 04:30 PM,Pittsburgh @ California,,Over 47.5 · model 48.2,7.5,-7.5,47.5,47.5,1,no lean,0.04,7.46,0.7,48.2,over,14.7,-7.2,home,-4.4,-1.0,CHECK NEWS,"wind 2 mph, 62F, rain 57%",False,,False
+Sat 11/28 04:30 PM,Auburn @ Alabama,,,-15.5,-10.0,50.5,53.5,1,no lean,0.01,-15.51,0.1,50.6,no lean,-5.3,-10.2,away,-4.5,-3.9,CHECK NEWS,"wind 4 mph, 51F",False,,False
+Sat 11/28 06:00 PM,Arizona State @ Arizona,,,-7.5,-4.5,55.5,52.5,1,no lean,-0.12,-7.38,-0.1,55.4,no lean,-3.1,-4.4,away,-3.9,-3.9,,"wind 3 mph, 66F",False,,False
+Sat 11/28 06:00 PM,Nevada @ UNLV,,Over 42.5 · model 43.9,-4.5,-4.5,42.5,45.5,1,no lean,-0.14,-4.36,1.4,43.9,over,-1.2,-3.3,away,-3.8,2.2,,dome - no weather effect,False,,False
+Sat 11/28 06:30 PM,Baylor @ Houston,,,-4.5,-4.5,54.5,54.5,1,no lean,-0.0,-4.5,-0.3,54.2,no lean,0.2,-4.7,no lean,-4.5,-3.2,,"wind 5 mph (gusts 17), 64F",False,,False
+Sat 11/28 06:30 PM,Texas State @ Utah State,,Under 53.5 · model 52.7,7.5,7.5,53.5,53.5,1,no lean,0.13,7.37,-0.8,52.7,under,0.2,7.3,no lean,-3.9,-0.6,,"wind 3 mph, 40F",False,,False
+Sat 11/28 07:00 PM,Oregon State @ Fresno State,,,-1.5,-1.5,56.5,56.5,1,no lean,-0.03,-1.47,-0.3,56.2,no lean,-0.4,-1.1,no lean,-4.4,-3.0,,"wind 6 mph (gusts 17), 64F",False,,False
+Sat 11/28 08:00 PM,Sacramento State @ Hawai'i,,Over 38.5 · model 39.4,-13.5,-13.5,38.5,44.5,1,no lean,-0.0,-13.5,0.9,39.4,over,0.6,-14.1,home,-4.5,-0.0,CHECK NEWS,"wind 10 mph (gusts 35), 71F",True,rest: Sacramento State 17d @ Hawai'i 7d (Sacramento State off bye),True
