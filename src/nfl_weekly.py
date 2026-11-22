@@ -195,6 +195,7 @@ def run_score(args) -> None:
         elif r.inj_hold: fl.append("check QB/injuries")
         if getattr(r, "wx_flag", None) is True: fl.append("weather")
         if r.rest_note: fl.append(str(r.rest_note).replace("rest: ", ""))
+        if "to throw" in str(r.sit_note): fl.append("pocket: " + str(r.sit_note).split(" | ", 1)[1])
         rows_.append({"kickoff": r.kickoff, "game": r.game, "line": f"{r.home_team} {-r.spread_line:+g}",
                       "held": "NO LEAN - QB CHANGE" if r.qb_hold else "",
                       "spread": picks.spread_short(r.home_team, r.away_team, r.spread_lean, -r.spread_line, r.gap_spread) if abs(r.gap_spread) >= 0.5 else "",
@@ -284,7 +285,12 @@ def _apply_situational(pred: pd.DataFrame, margin_sd: float) -> pd.DataFrame:
         import situational
         season = int(pred["season"].iloc[0])
         tg = situational.team_games([season - 1, season], ROOT / "data" / "raw")
-        pred = situational.adjust(pred, tg)
+        try:
+            ttt = situational.ttt_table([season - 1, season])
+        except Exception as e:  # noqa: BLE001
+            print(f"WARNING: time-to-throw unavailable ({e.__class__.__name__}) - pocket-stress term skipped")
+            ttt = None
+        pred = situational.adjust(pred, tg, ttt)
         phi = lambda m: 0.5 * (1 + np.vectorize(erf)(m / (margin_sd * sqrt(2))))  # noqa: E731
         old = pred["model_margin"].astype(float)
         pred["model_margin"] = old + pred["sit_adj"]

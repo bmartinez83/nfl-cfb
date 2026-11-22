@@ -4,6 +4,8 @@ For each upcoming game, from only PRIOR games (this season + a few prior-season 
   d4go  home minus away 4th-down go-for-it rate
   d4c   home minus away (own 4th-down conversion + opponent's 4th-down conversion allowed)
   dprs  home minus away (own sacks+QB hits allowed per dropback + opponent's sacks+QB hits generated)
+dsack = pocket stress: (QB time to throw above league avg) x (opposing pass rush above league avg), home minus away.
+Its backtest fit was ~0, so its weight is a small hand-set prior (a 1-sd gap is ~0.3 pt) chosen by the user, not a measured edge.
 Coefficients are sign-constrained fits to (actual margin - closing spread) over 2022-2025 (tools/situational_backtest.py).
 3rd-down matchup and time-to-throw fit to zero; totals showed no relationship, so only the margin is adjusted.
 Out of sample the signal was weak (corr ~0.03-0.04), so the adjustment is capped at +/-CAP points. Never breaks a scan."""
@@ -16,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 BASE = "https://github.com/nflverse/nflverse-data/releases/download"
-COEF = {"d4go": 1.77, "d4c": 3.11, "dprs": -4.80}      # points per unit of the home-minus-away difference
+COEF = {"d4go": 1.77, "d4c": 3.11, "dprs": -4.80, "dsack": -40.0}      # points per unit of the home-minus-away difference
 CAP = 1.0
 K, PRIOR_W = 8, 4
 PBP_COLS = ["game_id", "season_type", "week", "home_team", "away_team", "posteam", "defteam", "play_type", "down",
@@ -63,6 +65,18 @@ def team_games(seasons, cache_dir: Path) -> pd.DataFrame:
     return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
 
+def ttt_table(seasons) -> pd.DataFrame:
+    """NGS average time to throw per team-week (attempt-weighted over that team's QBs)."""
+    import ingest
+    raw = ingest.fetch(f"{BASE}/nextgen_stats/ngs_passing.csv.gz")
+    n = pd.read_csv(io.BytesIO(raw), compression="gzip", low_memory=False)
+    n = n[(n.week > 0) & n.season.isin(list(seasons))]
+    n = n.assign(w=n.avg_time_to_throw * n.attempts)
+    g = n.groupby(["season", "week", "team_abbr"]).agg(w=("w", "sum"), a=("attempts", "sum")).reset_index()
+    g["ttt"] = g.w / g.a
+    return g.rename(columns={"team_abbr": "team"})[["season", "week", "team", "ttt"]]
+
+
 def _rates(tg: pd.DataFrame, num: str, den: str, key: str, season: int, week: int, team: str, lg: float, avg_den: float):
     d = tg[tg[key] == team]
     cur, prev = d[(d.season == season) & (d.week < week)], d[d.season == season - 1]
@@ -72,7 +86,7 @@ def _rates(tg: pd.DataFrame, num: str, den: str, key: str, season: int, week: in
     return (n + lg * K * avg_den) / (t + K * avg_den)
 
 
-def adjust(pred: pd.DataFrame, tg: pd.DataFrame) -> pd.DataFrame:
+def adjust(pred: pd.DataFrame, tg: pd.DataFrame, ttt: pd.DataFrame | None = None) -> pd.DataFrame:
     """Adds sit_adj (home-minus-away points) and sit_note. pred needs season, week, home_team, away_team."""
     pred = pred.copy()
     pred["sit_adj"], pred["sit_note"] = 0.0, ""
@@ -82,16 +96,28 @@ def adjust(pred: pd.DataFrame, tg: pd.DataFrame) -> pd.DataFrame:
     L = {n: tg[n].sum() / max(tg[d].sum(), 1) for n, d in (("f4_go", "f4_n"), ("f4_c", "f4_go"), ("sh", "db_n"))}
     A = {d: tg[d].mean() for d in ("f4_n", "f4_go", "db_n")}
     adj, notes = [], []
+    lg_ttt = float(ttt.ttt.mean()) if ttt is not None and len(ttt) else np.nan
+
+    def T(season, week, team):
+        if ttt is None or not len(ttt):
+            return np.nan
+        d = ttt[(ttt.team == team) & (((ttt.season == season) & (ttt.week < week)) | (ttt.season == season - 1))]
+        return float(d.ttt.mean()) if len(d) else np.nan
     for r in pred.itertuples():
         s, w, h, a = int(r.season), int(r.week), r.home_team, r.away_team
         R = lambda num, den, key, t: _rates(tg, num, den, key, s, w, t, L[num], A[den])  # noqa: E731
         go = {t: R("f4_go", "f4_n", "team", t) for t in (h, a)}
         c4 = {t: R("f4_c", "f4_go", "team", t) + R("f4_c", "f4_go", "opp", o) for t, o in ((h, a), (a, h))}
         pr = {t: R("sh", "db_n", "team", t) + R("sh", "db_n", "opp", o) for t, o in ((h, a), (a, h))}
-        diff = {"d4go": go[h] - go[a], "d4c": c4[h] - c4[a], "dprs": pr[h] - pr[a]}
+        lgp = 2 * L["sh"]
+        risk = {t: (T(s, w, t) - lg_ttt) * (pr[t] - lgp) for t in (h, a)}
+        dsack = risk[h] - risk[a]
+        diff = {"d4go": go[h] - go[a], "d4c": c4[h] - c4[a], "dprs": pr[h] - pr[a], "dsack": 0.0 if np.isnan(dsack) else dsack}
         raw = sum(COEF[k] * v for k, v in diff.items())
         x = float(np.clip(raw, -CAP, CAP))
         adj.append(x)
-        notes.append(f"situational: {'home' if x > 0 else 'away'} {abs(x):.1f} pts (4th-down go/conv, pass rush)" if abs(x) >= 0.05 else "")
+        hot = [f"{t} QB {T(s, w, t):.2f}s to throw vs strong rush" for t in (h, a) if risk[t] > 0.003]
+        notes.append((f"situational: {'home' if x > 0 else 'away'} {abs(x):.1f} pts (4th-down, pass rush, pocket stress)"
+                      + (" | " + "; ".join(hot) if hot else "")) if abs(x) >= 0.05 or hot else "")
     pred["sit_adj"], pred["sit_note"] = adj, notes
     return pred
