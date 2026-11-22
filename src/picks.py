@@ -35,3 +35,41 @@ def result_word(win, push=False) -> str:
     if win is False or win == 0:
         return "Loss"
     return ""
+
+
+# ----------------------------------------------------------------- compact printed card
+def card(rows, title="PICKS (edge 0.5+ pts)") -> str:
+    """Short printed view. rows = dicts with kickoff, game, line, spread, total, flags (list of short strings).
+    Games with at least one pick are listed one per line; everything else is collapsed to a single line."""
+    hit = [r for r in rows if r.get("spread") or r.get("total") or r.get("held")]
+    miss = [r for r in rows if r not in hit]
+    out = []
+    if hit:
+        w = [max(len(str(r[k])) for r in hit) for k in ("kickoff", "game", "line")]
+        out.append(f"{title}  -  {len(hit)} of {len(rows)} games")
+        out.append(f"  {'Kickoff':<{w[0]}}  {'Game':<{w[1]}}  {'Home line':<{w[2]}}  Picks (spread / total)")
+        for r in hit:
+            picks_ = r.get("held") or "   ".join(p for p in (r.get("spread"), r.get("total")) if p)
+            flags = f"   [{'; '.join(r['flags'])}]" if r.get("flags") else ""
+            out.append(f"  {str(r['kickoff']):<{w[0]}}  {str(r['game']):<{w[1]}}  {str(r['line']):<{w[2]}}  {picks_}{flags}")
+    else:
+        out.append(f"{title}  -  none of {len(rows)} games")
+    if miss:
+        out.append(f"\nNO PICK ({len(miss)}): " + ", ".join(str(r["game"]) for r in miss))
+    flagged = [r for r in miss if r.get("flags")]
+    if flagged:
+        out.append("  flags: " + "; ".join(f"{r['game']} [{'; '.join(r['flags'])}]" for r in flagged))
+    return "\n".join(out)
+
+
+def spread_short(home, away, lean, home_line, edge) -> str:
+    if lean not in ("home", "away") or home_line is None:
+        return ""
+    team, line = (home, home_line) if lean == "home" else (away, -home_line)
+    return f"{team} {_n(line)} sp ({abs(edge):.1f})"
+
+
+def total_short(lean, line, model_total) -> str:
+    if lean not in ("over", "under") or line is None:
+        return ""
+    return f"{lean.capitalize()} {line:g} ({model_total:.1f})"

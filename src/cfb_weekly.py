@@ -399,13 +399,24 @@ def run_score(args) -> int:
     else:
         print(f"\n{len(show)} upcoming games with lines. Full columns are in {out_dir / 'cfb_weekly_predictions.csv'} "
               f"(or run with --wide).\n")
-        print(plain_view(res).to_string(index=False))
-        print("\nHOW TO READ: 'Line' = home team's current spread (open in brackets); negative = favored.\n"
-              "SPREAD PICK = bet that team against the point spread (NOT the moneyline), at the line shown, with the model's edge in points (blank = under 0.5 pt, no lean).\n"
-              "TOTAL PICK = Over/Under the posted total; 'model' is the model's own projected total (blank = under 0.5 pt).\n"
-              "LINE MAY MOVE = which way the model expects the spread to still move. EV = best uncalibrated EV (side/total).\n"
-              "WEATHER = shown only for bad conditions (wind 15+ mph, gusts 25+, rain 60%+, 25F or colder); context only.\n"
-              "NEWS? = line or total moved 4+ points since the open (injury/suspension?) - skip those leans until checked.")
+        rows_ = []
+        for r in res.itertuples():
+            h, a = r.homeTeam, r.awayTeam
+            fl = []
+            if r.check_news: fl.append("NEWS? line moved 4+")
+            if getattr(r, "wx_flag", None) is True: fl.append(f"weather: {r.wx_note}")
+            if getattr(r, "rest_note", ""): fl.append(str(r.rest_note).replace("rest: ", ""))
+            if pd.notna(r.remaining_move) and abs(r.remaining_move) >= MIN_EDGE:
+                fl.append(f"line may move toward {h if r.move_lean == 'home' else a}")
+            rows_.append({"kickoff": r.kickoff_pt, "game": f"{a} @ {h}", "line": f"{h} {r.mkt_spread:+g}",
+                          "spread": picks.spread_short(h, a, r.side_lean, r.mkt_spread, r.pred_side_resid)
+                                    if pd.notna(r.pred_side_resid) and abs(r.pred_side_resid) >= MIN_EDGE else "",
+                          "total": picks.total_short(r.total_lean, r.mkt_total, r.fair_total)
+                                   if pd.notna(r.pred_total_resid) and abs(r.pred_total_resid) >= MIN_EDGE else "",
+                          "flags": fl})
+        print(picks.card(rows_))
+        print("\nsp = bet that team against the point spread (not the moneyline); number in () = model edge in points. "
+              "Over/Under line (model total). Full columns: outputs/cfb_weekly_predictions.csv or run with --wide.")
     print("\nev_side_pct / ev_total_pct = UNCALIBRATED expected value per 100 risked at -110 IF the model's win chance were\n"
           "right. Negative = the vig outweighs the model's edge. Not a bet signal: no edge has been proven.")
     print("\nSIDE leans (side_lean = which team covers the current spread; side_fair_spread = model's home line) are shown\n"

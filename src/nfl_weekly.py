@@ -186,9 +186,22 @@ def run_score(args) -> None:
     cols = ["kickoff", "game", "spread_pick", "total_pick", "spread_line", "model_margin", "gap_spread", "spread_lean",
             "ev_spread_pct", "total_line", "model_total", "gap_total", "total_lean", "ev_total_pct",
             "inj_hold", "inj_note", "qb_hold", "qb_note", "wx_note", "wx_flag", "rest_note"]
-    pd.set_option("display.width", 250)
-    print("\nspread_pick = bet that team against the point spread (NOT the moneyline). total_pick = Over/Under the posted total; 'model' = the model's own projected total.")
-    print("\n" + view[cols].round(1).to_string(index=False))
+    rows_ = []
+    for r in view.itertuples():
+        fl = []
+        if r.qb_hold: fl.append("QB change")
+        elif r.inj_hold: fl.append("check QB/injuries")
+        if getattr(r, "wx_flag", None) is True: fl.append("weather")
+        if r.rest_note: fl.append(str(r.rest_note).replace("rest: ", ""))
+        rows_.append({"kickoff": r.kickoff, "game": r.game, "line": f"{r.home_team} {-r.spread_line:+g}",
+                      "held": "NO LEAN - QB CHANGE" if r.qb_hold else "",
+                      "spread": picks.spread_short(r.home_team, r.away_team, r.spread_lean, -r.spread_line, r.gap_spread) if abs(r.gap_spread) >= 0.5 else "",
+                      "total": picks.total_short(r.total_lean, r.total_line, r.model_total) if abs(r.gap_total) >= 0.5 else "",
+                      "flags": fl})
+    print("\n" + picks.card(rows_))
+    print("\nsp = bet that team against the point spread (not the moneyline); number in () = model edge in points. "
+          "Over/Under (n) = posted total, (n) = model's own total. Full columns: outputs/nfl_weekly_predictions.csv.\n"
+          "NO edge was found in testing: these are leans to LOG and grade, not bets.")
     view[cols].round(2).to_csv(out / "nfl_weekly_predictions.csv", index=False)
     print("\nspread_line is the HOME margin the market expects (positive = home favored). "
           "gap = model minus market.\nev_*_pct = UNCALIBRATED expected value per 100 risked at -110 IF the "
