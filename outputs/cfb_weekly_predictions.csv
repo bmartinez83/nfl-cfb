@@ -1,8 +1,8 @@
 kickoff_pt,game,spread_pick,total_pick,mkt_spread,sp_open,mkt_total,ou_open,n_books,side_lean,pred_side_resid,side_fair_spread,pred_total_resid,fair_total,total_lean,remaining_move,fair_home_spread,move_lean,ev_side_pct,ev_total_pct,check_news,wx_note,wx_flag,rest_note,rest_flag
-Tue 11/24 04:00 PM,Miami (OH) @ Western Michigan,,Over 46.5 · model 47.6,-7.0,-7.5,46.5,46.5,1,no lean,0.09,-7.09,1.1,47.6,over,0.9,-7.9,home,-4.1,0.9,,"wind 6 mph (gusts 13), 32F",False,,False
+Tue 11/24 04:00 PM,Miami (OH) @ Western Michigan,,Over 46.5 · model 47.6,-7.5,-7.5,46.5,46.5,1,no lean,0.09,-7.59,1.1,47.6,over,0.4,-7.9,no lean,-4.1,0.9,,"wind 6 mph (gusts 13), 32F",False,,False
 Tue 11/24 04:00 PM,Kent State @ Eastern Michigan,,Over 45.5 · model 47.2,-5.5,-6.5,45.5,46.5,1,no lean,0.06,-5.56,1.7,47.2,over,1.5,-7.0,home,-4.3,3.6,,"wind 4 mph, 31F",False,,False
 Thu 11/26 05:00 PM,TCU @ Texas Tech,,,-11.5,-16.5,46.5,55.5,1,no lean,-0.1,-11.4,0.1,46.6,no lean,4.3,-15.8,home,-4.1,-3.9,CHECK NEWS,"wind 7 mph, 48F",False,"rest: TCU 5d @ Texas Tech 5d (TCU short week, Texas Tech short week)",True
-Fri 11/27 09:00 AM,Nebraska @ Iowa,,Over 39.5 · model 40.3,-5.5,-6.5,39.5,38.5,1,no lean,0.1,-5.6,0.8,40.3,over,1.5,-7.0,home,-4.1,-0.7,,"wind 8 mph (gusts 14), 45F",False,,False
+Fri 11/27 09:00 AM,Nebraska @ Iowa,,Over 39.5 · model 40.3,-6.0,-6.5,39.5,38.5,1,no lean,0.1,-6.1,0.8,40.3,over,1.0,-7.0,home,-4.1,-0.7,,"wind 8 mph (gusts 14), 45F",False,,False
 Fri 11/27 09:00 AM,Tulsa @ UTSA,,,-1.5,-2.5,60.5,58.5,1,no lean,0.02,-1.52,-0.1,60.4,no lean,0.7,-2.2,home,-4.5,-3.9,,dome - no weather effect,False,,False
 Fri 11/27 09:00 AM,Mississippi State @ Ole Miss,,Under 56.5 · model 55.9,-19.5,-14.5,56.5,56.5,1,no lean,-0.04,-19.46,-0.6,55.9,under,-4.9,-14.6,away,-4.3,-1.6,CHECK NEWS,"wind 6 mph, 51F",False,,False
 Fri 11/27 09:00 AM,Toledo @ Ohio,,Over 49.5 · model 50.2,3.5,4.5,49.5,48.5,1,no lean,0.03,3.47,0.7,50.2,over,-0.9,4.4,away,-4.4,-1.3,,"wind 12 mph (gusts 26), 42F",True,rest: Toledo 7d @ Ohio 10d (Ohio off bye),True
@@ -52,17 +52,17 @@ Sat 11/28 12:30 PM,USC @ UCLA,,,7.0,10.5,45.5,55.5,1,no lean,0.12,6.88,0.5,46.0,
 Sat 11/28 12:30 PM,Massachusetts @ Bowling Green,,Over 43.5 · model 45.7,-1.5,-1.5,43.5,43.5,1,no lean,-0.01,-1.49,2.2,45.7,over,-0.7,-0.8,away,-4.5,6.1,,"wind 16 mph (gusts 32), 48F",True,rest: Massachusetts 10d @ Bowling Green 8d (Massachusetts off bye),True
 Sat 11/28 12:30 PM,Duke @ Wake Forest,,,-14.0,-10.5,56.5,52.5,1,no lean,-0.06,-13.94,-0.3,56.2,no lean,-3.1,-10.9,away,-4.2,-3.0,CHECK NEWS,"wind 6 mph (gusts 14), 52F",False,,False
 Sat 11/28 01:00 PM,UAB @ North Texas,,,-4.5,-4.5,48.5,48.5,1,no lean,-0.22,-4.28,0.1,48.6,no lean,-1.5,-3.0,away,-3.4,-4.1,,"wind 11 mph (gusts 18), 66F",False,,False
-Sat 11/28 01:15 PM,Oklahoma @ Missouri,,Over 41.5 · model 42.3,-1.5,-1.5,41.5,42.5,1,no lean,-0.17,-1.33,0.8,42.3,over,-0.8,-0.7,away,-3.7,-0.7,,"wind 8 mph (gusts 19), 53F",False,,False
+Sat 11/28 01:15 PM,Oklahoma @ Missouri,,Over 39.5 · model 40.4,-1.5,-1.5,39.5,42.5,1,no lean,-0.17,-1.33,0.9,40.4,over,-0.8,-0.7,away,-3.7,-0.2,,"wind 8 mph (gusts 19), 53F",False,,False
 Sat 11/28 01:15 PM,Michigan State @ Rutgers,,Over 48.5 · model 49.1,3.0,3.5,48.5,48.5,1,no lean,-0.2,3.2,0.6,49.1,over,-1.6,4.6,away,-3.6,-1.6,,"wind 5 mph (gusts 12), 53F",False,,False
-Sat 11/28 03:00 PM,Boise State @ Colorado State,,Under 75.5 · model 73.6,21.0,21.0,75.5,75.5,1,no lean,0.03,20.97,-1.9,73.6,under,-0.2,21.2,no lean,-4.4,4.5,,"wind 3 mph, 41F",False,,False
+Sat 11/28 03:00 PM,Boise State @ Colorado State,,Under 74.5 · model 72.7,21.0,21.0,74.5,75.5,1,no lean,0.03,20.97,-1.8,72.7,under,-0.2,21.2,no lean,-4.4,4.3,,"wind 3 mph, 41F",False,,False
 Sat 11/28 03:15 PM,Kansas @ Oklahoma State,,,-6.5,-6.5,66.5,67.5,1,no lean,0.04,-6.54,-0.4,66.1,no lean,0.6,-7.1,home,-4.3,-2.7,,"wind 2 mph, 53F",False,,False
 Sat 11/28 03:30 PM,San Diego State @ Washington State,,,3.0,3.0,46.5,46.5,1,no lean,0.03,2.97,0.3,46.8,no lean,1.3,1.7,home,-4.4,-3.1,,"wind 7 mph, 39F, rain 32%",False,,False
-Sat 11/28 04:00 PM,Purdue @ Indiana,,,-22.5,-22.5,52.5,52.5,1,no lean,-0.07,-22.43,-0.0,52.5,no lean,-0.5,-22.0,no lean,-4.2,-4.3,,"wind 9 mph (gusts 29), 47F",True,,False
+Sat 11/28 04:00 PM,Purdue @ Indiana,,,-21.5,-22.5,52.5,52.5,1,no lean,-0.07,-21.43,-0.0,52.5,no lean,0.5,-22.0,home,-4.2,-4.3,,"wind 9 mph (gusts 29), 47F",True,,False
 Sat 11/28 04:00 PM,Tennessee @ Vanderbilt,,,12.5,3.0,43.5,57.5,1,no lean,-0.13,12.63,0.1,43.6,no lean,8.2,4.3,home,-3.9,-3.9,CHECK NEWS,"wind 8 mph (gusts 27), 53F",True,,False
 Sat 11/28 04:30 PM,Washington @ Oregon,,,-13.5,-15.5,49.5,54.5,1,no lean,-0.04,-13.46,-0.1,49.4,no lean,1.7,-15.2,home,-4.3,-3.9,CHECK NEWS,"wind 2 mph, 48F, rain 44%",False,,False
-Sat 11/28 04:30 PM,Pittsburgh @ California,,Over 47.5 · model 48.2,7.5,-7.5,47.5,47.5,1,no lean,0.04,7.46,0.7,48.2,over,14.7,-7.2,home,-4.4,-1.0,CHECK NEWS,"wind 2 mph, 62F, rain 57%",False,,False
+Sat 11/28 04:30 PM,Pittsburgh @ California,,Over 47.5 · model 48.2,8.5,-7.5,47.5,47.5,1,no lean,0.04,8.46,0.7,48.2,over,15.7,-7.2,home,-4.3,-1.0,CHECK NEWS,"wind 2 mph, 62F, rain 57%",False,,False
 Sat 11/28 04:30 PM,Auburn @ Alabama,,,-15.5,-10.0,50.5,53.5,1,no lean,0.01,-15.51,0.1,50.6,no lean,-5.3,-10.2,away,-4.5,-3.9,CHECK NEWS,"wind 4 mph, 51F",False,,False
-Sat 11/28 06:00 PM,Arizona State @ Arizona,,,-7.5,-4.5,55.5,52.5,1,no lean,-0.12,-7.38,-0.1,55.4,no lean,-3.1,-4.4,away,-3.9,-3.9,,"wind 3 mph, 66F",False,,False
+Sat 11/28 06:00 PM,Arizona State @ Arizona,,,-7.5,-4.5,54.5,52.5,1,no lean,-0.12,-7.38,-0.1,54.4,no lean,-3.1,-4.4,away,-3.9,-4.1,,"wind 3 mph, 66F",False,,False
 Sat 11/28 06:00 PM,Nevada @ UNLV,,Over 42.5 · model 43.9,-4.5,-4.5,42.5,45.5,1,no lean,-0.14,-4.36,1.4,43.9,over,-1.2,-3.3,away,-3.8,2.2,,dome - no weather effect,False,,False
 Sat 11/28 06:30 PM,Baylor @ Houston,,,-4.5,-4.5,54.5,54.5,1,no lean,-0.0,-4.5,-0.3,54.2,no lean,0.2,-4.7,no lean,-4.5,-3.2,,"wind 5 mph (gusts 17), 64F",False,,False
 Sat 11/28 06:30 PM,Texas State @ Utah State,,Under 53.5 · model 52.7,7.5,7.5,53.5,53.5,1,no lean,0.13,7.37,-0.8,52.7,under,0.2,7.3,no lean,-3.9,-0.6,,"wind 3 mph, 40F",False,,False
