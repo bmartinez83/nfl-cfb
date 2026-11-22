@@ -199,7 +199,9 @@ def _plain(label: str) -> str:
     if l.startswith("lean matched the move"):
         return "Line later moved toward our lean"
     if l.startswith(("all leans", "all side leans")) or l.startswith(("SPREAD leans", "TOTAL leans")):
-        return "All leans"
+        return "All leans (even tiny edges)"
+    if l.startswith(("picks shown", "side picks shown")):
+        return "Picks we actually show (edge 0.5+ pts)"
     return l[:1].upper() + l[1:]
 
 

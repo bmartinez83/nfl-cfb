@@ -10,6 +10,8 @@ wx_flag is True when wind >= 15 mph, gusts >= 25 mph, rain chance >= 60%, or tem
 from __future__ import annotations
 
 import json
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -75,14 +77,59 @@ def describe(w: dict) -> tuple[str, bool]:
     return ", ".join(bits), bool(flag)
 
 
+_CACHE: dict = {}
+_LAST_CALL = [0.0]
+_LAST_ERR: list = [None]
+_FAILS = [0]            # consecutive stadiums that failed after all retries; at 3 we stop hammering the API this run
+MIN_GAP = 0.3          # seconds between real requests: the runner shares an IP with other users of the free API
+
+
+def err_label(e: Exception) -> str:
+    """Short reason for the wx_note, with the HTTP code when there is one (e.g. 'HTTP 429')."""
+    if isinstance(e, urllib.error.HTTPError):
+        return f"HTTP {e.code}"
+    return e.__class__.__name__
+
+
 def fetch(lat: float, lon: float) -> dict:
+    """One Open-Meteo request per stadium (cached), spaced out, retried with backoff on 429/5xx/network errors."""
+    key = (round(lat, 3), round(lon, 3))
+    if key in _CACHE:
+        return _CACHE[key]
+    if _FAILS[0] >= 3:
+        raise _LAST_ERR[0]
     q = urllib.parse.urlencode({
         "latitude": lat, "longitude": lon, "timezone": "UTC", "forecast_days": 16,
         "temperature_unit": "fahrenheit", "wind_speed_unit": "mph",
         "hourly": "temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability"})
     req = urllib.request.Request(f"https://api.open-meteo.com/v1/forecast?{q}", headers={"User-Agent": "nfl-model-weather"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode())
+    last: Exception | None = None
+    for attempt in range(5):
+        wait = MIN_GAP - (time.time() - _LAST_CALL[0])
+        if wait > 0:
+            time.sleep(wait)
+        _LAST_CALL[0] = time.time()
+        delay = 3 * (attempt + 1)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                _CACHE[key] = json.loads(r.read().decode())
+                _FAILS[0] = 0
+                return _CACHE[key]
+        except urllib.error.HTTPError as e:
+            if e.code < 500 and e.code != 429:
+                raise                                   # a real client error: retrying will not help
+            last = e
+            try:
+                delay = min(30, max(delay, int(e.headers.get("Retry-After", 0))))
+            except (TypeError, ValueError, AttributeError):
+                pass
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+            last = e
+        if attempt < 4:
+            time.sleep(delay)
+    _FAILS[0] += 1
+    _LAST_ERR[0] = last
+    raise last
 
 
 def note_for(home: str, roof, gameday, gametime, location=None, fetcher=fetch) -> tuple[str, bool | None]:
@@ -100,7 +147,7 @@ def note_for(home: str, roof, gameday, gametime, location=None, fetcher=fetch) -
     try:
         w = summarize(fetcher(*COORDS[home]), kick)
     except Exception as e:  # noqa: BLE001 - never break the scan over weather
-        return f"weather unavailable ({e.__class__.__name__})", None
+        return f"weather unavailable ({err_label(e)})", None
     if w is None:
         return "forecast not available yet", None
     text, flag = describe(w)

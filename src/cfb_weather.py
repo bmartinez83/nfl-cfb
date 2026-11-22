@@ -80,7 +80,7 @@ def note_for(info, kick: datetime, fetcher=W.fetch) -> tuple[str, bool | None]:
     try:
         w = W.summarize(fetcher(info["lat"], info["lon"]), kick)
     except Exception as e:  # noqa: BLE001 - never break the scan over weather
-        return f"weather unavailable ({e.__class__.__name__})", None
+        return f"weather unavailable ({W.err_label(e)})", None
     if w is None:
         return "forecast not available yet", None
     return W.describe(w)

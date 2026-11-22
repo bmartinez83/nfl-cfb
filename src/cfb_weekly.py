@@ -65,6 +65,8 @@ from sklearn.preprocessing import StandardScaler
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import picks  # noqa: E402
 
+MIN_EDGE = 0.5          # points of model-vs-market gap before a lean is shown as a pick
+
 ROOT = Path(__file__).resolve().parent.parent
 PT = ZoneInfo("America/Los_Angeles")
 
@@ -381,6 +383,10 @@ def run_score(args) -> int:
     show.insert(3, "total_pick", [picks.total_pick(r.total_lean, r.mkt_total, r.fair_total)
                                   if pd.notna(r.pred_total_resid) and abs(r.pred_total_resid) >= 0.5 else ""
                                   for r in res.itertuples()])
+    # the raw lean direction is always logged, but a 0.01-point "lean" is noise: show "no lean" under 0.5 pt
+    for lean, edge in (("side_lean", "pred_side_resid"), ("total_lean", "pred_total_resid"), ("move_lean", "remaining_move")):
+        small = ~(show[edge].abs() >= MIN_EDGE)
+        show[lean] = np.where(small, "no lean", show[lean])
     for c in ("fair_total", "remaining_move", "fair_home_spread", "pred_total_resid"):
         show[c] = show[c].round(1)
     for c in ("pred_side_resid", "side_fair_spread"):
@@ -463,6 +469,8 @@ def run_grade(args) -> int:
     live = t[~t["push"]]
     print("\nTOTALS (entry = first logged total; lean over/under; borderline signal in testing):")
     print(fmt_tally("all leans", int(live["win"].sum()), len(live), int(t["push"].sum()), roi=True))
+    shown = live[live["pred_total_resid"].abs() >= MIN_EDGE]
+    print(fmt_tally("picks shown (edge 0.5+ pts)", int(shown["win"].sum()), len(shown), roi=True))
     if len(live) >= 12:
         big = live[live["pred_total_resid"].abs() >= live["pred_total_resid"].abs().quantile(2 / 3)]
         print(fmt_tally("largest third by |pred|", int(big["win"].sum()), len(big), roi=True))
@@ -484,6 +492,8 @@ def run_grade(args) -> int:
     sl = sd[~sd["push"]]
     print("\nSIDES (entry = first logged spread; NO edge found in testing, shown for the record):")
     print(fmt_tally("all side leans", int(sl["win"].sum()), len(sl), int(sd["push"].sum()), roi=True))
+    shown_s = sl[sl["pred_side_resid"].abs() >= MIN_EDGE]
+    print(fmt_tally("side picks shown (edge 0.5+ pts)", int(shown_s["win"].sum()), len(shown_s), roi=True))
     if len(sl) >= 12:
         bigs = sl[sl["pred_side_resid"].abs() >= sl["pred_side_resid"].abs().quantile(2 / 3)]
         print(fmt_tally("largest third by |pred|", int(bigs["win"].sum()), len(bigs), roi=True))
