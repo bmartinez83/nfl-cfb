@@ -1,5 +1,5 @@
 name: grade
-# Grades every logged lean once the weekend games are final. Tuesdays 15:00 UTC. Report: outputs/grade_report.txt
+# Grades every logged lean once the weekend games are final. Tuesdays 15:00 UTC. Reports: outputs/grade_report_nfl.txt, outputs/grade_report_cfb.txt (combined: grade_report.txt)
 on:
   schedule:
     - cron: "0 15 * * 2"
@@ -30,8 +30,10 @@ jobs:
         run: |
           python src/cfb_pull.py --start 2019
           python src/cfb_pull.py --start 2026 --refresh
-          { echo "=== CFB ==="; python -W ignore src/cfb_weekly.py --grade;
-            echo; echo "=== NFL ==="; python -W ignore src/nfl_weekly.py --refresh --grade 2>&1 | grep -v "^season\|^team_week\|^games.csv\|^Raw files"; } | tee outputs/grade_report.txt
+          python -W ignore src/cfb_weekly.py --grade | tee outputs/grade_report_cfb.txt
+          python -W ignore src/nfl_weekly.py --refresh --grade 2>&1 | grep -v "^season\|^team_week\|^games.csv\|^Raw files" | tee outputs/grade_report_nfl.txt
+          # combined file is still read by the HTML report
+          { echo "=== CFB ==="; cat outputs/grade_report_cfb.txt; echo; echo "=== NFL ==="; cat outputs/grade_report_nfl.txt; } > outputs/grade_report.txt
       - run: |
           git config user.name "tracker-bot"
           git config user.email "tracker-bot@users.noreply.github.com"
