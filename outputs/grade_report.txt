@@ -19,16 +19,21 @@ per-game detail: /home/runner/work/nfl-cfb/nfl-cfb/outputs/cfb_graded.csv
 Treat results as noise until n is in the hundreds.
 
 === NFL ===
-games logged: 42 | finished and gradeable: 22 | pending: 20
+games logged: 43 | finished and gradeable: 27 | pending: 16
 
-SPREAD leans (ATS at first logged line): 11-11-0  win% 50.0 (95% CI 30.7-69.3, breakeven 52.4)  ROI at -110 -4.5%
-TOTAL leans (at first logged line): 11-11-0  win% 50.0 (95% CI 30.7-69.3, breakeven 52.4)  ROI at -110 -4.5%
-CLV spread: avg -0.30 pts vs last logged line | line moved in your favor 4, against 8, unchanged 10
-CLV total: avg -0.36 pts vs last logged line | line moved in your favor 4, against 9, unchanged 9
+SPREAD leans (ATS at first logged line): 14-13-0  win% 51.9 (95% CI 34.0-69.3, breakeven 52.4)  ROI at -110 -1.0%
+TOTAL leans (at first logged line): 14-13-0  win% 51.9 (95% CI 34.0-69.3, breakeven 52.4)  ROI at -110 -1.0%
+CLV spread: avg -0.28 pts vs last logged line | line moved in your favor 6, against 10, unchanged 11
+CLV total: avg -0.37 pts vs last logged line | line moved in your favor 6, against 11, unchanged 10
 
 (The CLV above uses our own LAST logged line as the close - a weak proxy.)
 
 CLV vs NOVIG close (same-source: our entry time -> last Novig snapshot before kickoff)
   Novig CLV spread: avg +0.20 pts over 13 games | in your favor 8, against 5, unchanged 0
-  Novig CLV total: avg -0.51 pts over 13 games | in your favor 5, against 7, unchanged 1
-  (avg window 114h between entry and close; positive = the market moved toward our lean)
+  Novig CLV total: avg -0.48 pts over 14 games | in your favor 5, against 8, unchanged 1
+  (avg window 129h between entry and close; positive = the market moved toward our lean)
+
+BEST-TIMED ENTRY (hindsight; Novig snapshots, thin ladders dropped; points on our lean side)
+  spread: 26 games | our entry vs close: median +0.09, mean +0.13 | best possible entry: median 0.14, mean 0.53 | biggest buy-low/sell-high swing: median 0.55
+  total: 26 games | our entry vs close: median -0.02, mean -0.44 | best possible entry: median 0.35, mean 1.35 | biggest buy-low/sell-high swing: median 0.63
+  Hindsight only: the best entry is only known afterward, so this is a ceiling on timing, not a strategy.
