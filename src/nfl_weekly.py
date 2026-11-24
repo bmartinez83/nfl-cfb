@@ -276,6 +276,57 @@ def _novig_clv(fin: pd.DataFrame, out: Path) -> None:
     print(f"  (avg window {d['hrs'].mean():.0f}h between entry and close; positive = the market moved toward our lean)")
 
 
+def _max_profit(prices) -> float:
+    """LeetCode 121 (best time to buy and sell): largest later-minus-earlier gain in one pass, tracking the lowest price so far."""
+    lo, best = prices[0], 0.0
+    for p in prices[1:]:
+        best = max(best, p - lo)
+        lo = min(lo, p)
+    return best
+
+
+def _best_entry(fin: pd.DataFrame, out: Path) -> None:
+    """Hindsight check of entry timing, in line points on our lean side. For each graded game, using Novig's pre-kickoff
+    snapshots (thin ladders with <5 price points dropped): best possible entry vs the close (LeetCode 121 on the lean-signed
+    line), what our own first-logged entry captured, and the biggest swing available anywhere in the window."""
+    path = out / "novig_nfl_games.csv"
+    if not path.exists():
+        return
+    ng = pd.read_csv(path, low_memory=False)
+    ng["ts"] = pd.to_datetime(ng["ts_utc"], utc=True, errors="coerce")
+    ng["ko"] = pd.to_datetime(ng["starts_ts"], unit="ms", utc=True, errors="coerce")
+    ng = ng[ng["ts"] < ng["ko"]]
+    rows = []
+    for _, r in fin.iterrows():
+        h = ng[(ng["home"] == r["home"]) & (ng["away"] == r["away"])].sort_values("ts")
+        t0 = pd.to_datetime(r["run_ts_utc"], utc=True, errors="coerce")
+        for name, col, npts, sign in (
+                ("spread", "home_spread_line", "n_spread_pts", 1 if r["spread_lean"] == "home" else -1),
+                ("total", "total_line", "n_total_pts", 1 if r["total_lean"] == "over" else -1)):
+            g = h[(h[npts] >= 5) & h[col].notna()]
+            if len(g) < 3:
+                continue
+            v = (sign * g[col]).tolist()                  # higher = better for our side
+            entry = g.iloc[(g["ts"] - t0).abs().argmin()]
+            ours = v[-1] - sign * entry[col]
+            # best entry for the close = close minus the lowest earlier value; mirror the series so LeetCode 121 finds it
+            best_close = v[-1] - min(v[:-1])
+            rows.append({"kind": name, "ours": ours, "best": max(best_close, 0.0), "swing": _max_profit(v)})
+    d = pd.DataFrame(rows)
+    print("\nBEST-TIMED ENTRY (hindsight; Novig snapshots, thin ladders dropped; points on our lean side)")
+    if d.empty:
+        print("  not enough Novig snapshots yet")
+        return
+    for name in ("spread", "total"):
+        x = d[d["kind"] == name]
+        if x.empty:
+            continue
+        print(f"  {name}: {len(x)} games | our entry vs close: median {x['ours'].median():+.2f}, mean {x['ours'].mean():+.2f} | "
+              f"best possible entry: median {x['best'].median():.2f}, mean {x['best'].mean():.2f} | "
+              f"biggest buy-low/sell-high swing: median {x['swing'].median():.2f}")
+    print("  Hindsight only: the best entry is only known afterward, so this is a ceiling on timing, not a strategy.")
+
+
 def _apply_situational(pred: pd.DataFrame, margin_sd: float) -> pd.DataFrame:
     """Nudge model_margin by the 4th-down / pass-rush matchup (see situational.py). Skips (no change) on any failure."""
     from math import erf, sqrt
@@ -378,6 +429,10 @@ def run_grade(args) -> None:
               f"unchanged {int((~moved).sum())}")
     print("\n(The CLV above uses our own LAST logged line as the close - a weak proxy.)")
     _novig_clv(fin, out)
+    try:
+        _best_entry(fin, out)
+    except Exception as e:  # noqa: BLE001
+        print(f"  best-entry check skipped ({e.__class__.__name__}: {e})")
     fin.drop(columns=["pts"]).to_csv(out / "nfl_graded.csv", index=False)
 
 
